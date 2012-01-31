@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mezcode"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+	<supports-screens 
+	    android:largeScreens="true"
+		android:normalScreens="true" 
+		android:smallScreens="false"
+		android:xlargeScreens="true"
+		android:resizeable="true" android:anyDensity="true" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-sdk android:minSdkVersion="11" android:targetSdkVersion="15" />
+    <application
+        android:icon="@drawable/icon"
+        android:label="@string/app_name" >
+        <activity
+            android:name=".WikiWidgetsActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:host="*.wikipedia.org" android:scheme="http" />
+				<data android:host="*.wikipedia.org" android:scheme="https" />
+			</intent-filter>
+        </activity>
+        
+        
+        <receiver android:name=".WikiWidgetProvider" android:enabled="true">
+	    	<intent-filter>
+	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+	    	</intent-filter>
+	   	 	<meta-data android:name="android.appwidget.provider" android:label="List of local articles"
+	               android:resource="@xml/wiki_widget_info"  />
+		</receiver>
+		
+		<service android:name=".WikiWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />
+		
+		<receiver android:name=".PicWidgetProvider" android:enabled="true">
+	    	<intent-filter>
+	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+	    	</intent-filter>
+	   	 	<meta-data android:name="android.appwidget.provider" android:label="Stack of photo of the day articles"
+	               android:resource="@xml/wikipic_widget_info"  />
+		</receiver>
+		
+		<service android:name=".PicWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />
+		
+		<receiver android:name=".FeatureWidgetProvider" android:enabled="true">
+	    	<intent-filter>
+	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+	    	</intent-filter>
+	   	 	<meta-data android:name="android.appwidget.provider" android:label="Featured articles"
+	               android:resource="@xml/wiki_feature_widget_info"  />
+		</receiver>
+		
+		<service android:name=".FeatureWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />
+		
+    </application>
+
+</manifest>

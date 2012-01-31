@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_item_background" 
+    android:layout_margin="5dp"
+    >
+    <ImageView android:id="@+id/widget_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxHeight="400dp"
+        android:minHeight="40dp"
+        android:src="@drawable/icon"
+        android:contentDescription="@string/app_name"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"        />
+    <TextView 
+	    android:id="@+id/widget_item"
+	    android:layout_width="wrap_content"
+   		android:layout_height="wrap_content"
+   		android:minWidth="100dp"
+	    android:textAppearance="?android:attr/textAppearanceLarge"
+	    android:textColor="#ffffff"
+	    android:textStyle="bold"
+	    android:padding="8dip"
+		android:layout_toRightOf="@id/widget_pic"
+		android:layout_alignBottom="@id/widget_pic"
+		android:layout_marginTop="12dp"
+		/>
+	<TextView 
+	    android:id="@+id/widget_summary"
+	    android:layout_width="match_parent"
+   		android:layout_height="wrap_content"
+      	android:textStyle="italic"
+	    android:textColor="#aaaaaa"
+	    android:ellipsize="end"
+	    android:maxLines="25"
+	    android:textAppearance="?android:attr/textAppearanceMedium"
+	    android:layout_below="@id/widget_pic"
+	    android:padding="6dip"
+		android:layout_marginTop="3dp" android:layout_marginBottom="10dp"
+		/>
+</RelativeLayout>

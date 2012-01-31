@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <string name="hello">Hello World, WikipediaActivity!</string>
+    <string name="toast_msg">Loading Wikipedia</string>
+    <string name="app_name">WikiWidgets</string>
+    <string name="search_hint">Current location</string>
+    <string name="empty_view_text">This is the empty view</string>
+</resources>

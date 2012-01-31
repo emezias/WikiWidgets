@@ -1,0 +1,21 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="514dp"
+    android:layout_height="514dp">
+    <ListView 
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:scrollbarAlwaysDrawHorizontalTrack="true"
+        android:loopViews="true" />
+    <TextView 
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="@drawable/widget_item_background"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:text="@string/empty_view_text"
+        android:textSize="30sp" />
+</FrameLayout>
