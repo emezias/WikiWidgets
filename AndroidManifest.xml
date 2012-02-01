@@ -48,7 +48,7 @@
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
 		
-		<receiver android:name=".PicWidgetProvider" android:enabled="true">
+		<receiver android:name=".PicStackProvider" android:enabled="true">
 	    	<intent-filter>
 	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 	    	</intent-filter>
@@ -56,11 +56,11 @@
 	               android:resource="@xml/wikipic_widget_info"  />
 		</receiver>
 		
-		<service android:name=".PicWidgetService"
+		<service android:name=".PicStackService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
 		
-		<receiver android:name=".FeatureWidgetProvider" android:enabled="true">
+		<receiver android:name=".FeatureStackProvider" android:enabled="true">
 	    	<intent-filter>
 	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 	    	</intent-filter>
@@ -68,7 +68,19 @@
 	               android:resource="@xml/wiki_feature_widget_info"  />
 		</receiver>
 		
-		<service android:name=".FeatureWidgetService"
+		<service android:name=".FeatureStackService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />
+		
+		<receiver android:name=".FonFeatureStackProvider" android:enabled="true">
+	    	<intent-filter>
+	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+	    	</intent-filter>
+	   	 	<meta-data android:name="android.appwidget.provider" android:label="Featured articles"
+	               android:resource="@xml/fon_feature_widget_info"  />
+		</receiver>
+		
+		<service android:name=".FonFeatureStackService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
 		

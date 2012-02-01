@@ -10,7 +10,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-public class GeoWidgetProvider extends AppWidgetProvider {
+public class GeoListProvider extends AppWidgetProvider {
 	private static final String TAG = "GeoWidgetProvider";
 	public static final String CLICK = "Click";
     public static final String URL_TAG = "Url";
@@ -39,11 +39,6 @@ public class GeoWidgetProvider extends AppWidgetProvider {
     	//Log.d(TAG, "wiki provider receive " + action);
         if (action.equals(CLICK)) {
             String location = intent.getStringExtra(URL_TAG);
-            if(location == null) {
-            	location = "";
-            } else {
-            	location = makeMobile(location);
-            }
             //Display a toast for the user to read while the page loads
             Toast.makeText(context, "Loading Wikipedia", Toast.LENGTH_SHORT).show();
             //Debugging toast Toast.makeText(context, "Loading Wikipedia" + location, Toast.LENGTH_SHORT).show();
@@ -57,22 +52,14 @@ public class GeoWidgetProvider extends AppWidgetProvider {
             context.startActivity(tnt);
         }
         super.onReceive(context, intent);
-    	Log.d(TAG, "geo widget provider onReceive");
+    	//Log.d(TAG, "geo widget provider onReceive");
 
-    }
-    
-    public static String makeMobile(String location) {
-    	final StringBuilder tmp = new StringBuilder(location);
-    	tmp.insert(tmp.indexOf("en")+3, "m.");
-    	//tmp.insert(0, "http:");
-    	return tmp.toString();
-    }
- 
+    } 
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // update each of the widgets with the remote adapter
-    	Log.d(TAG, "geo widget provider update");
+    	//Log.d(TAG, "geo widget provider update");
         for (int i = 0; i < appWidgetIds.length; ++i) {
             // Here we setup the intent which points to the WikiWidgetService which will
             // provide the views for this collection.
@@ -83,7 +70,7 @@ public class GeoWidgetProvider extends AppWidgetProvider {
             rv.setRemoteAdapter(appWidgetIds[i], R.id.list_view, intent);
             rv.setEmptyView(R.id.list_view, R.id.empty_view);
 
-            final Intent toastIntent = new Intent(context, GeoWidgetProvider.class);
+            final Intent toastIntent = new Intent(context, GeoListProvider.class);
             // Set the action to run when the user touches a particular view 
             toastIntent.setAction(CLICK);
             toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);

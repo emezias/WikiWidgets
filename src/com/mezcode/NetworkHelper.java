@@ -38,7 +38,7 @@ public class NetworkHelper {
     static final  String TITLE = "title";
     static final  String ITEM = "item";
         
-    static ArrayList<PicItem> returnList(BufferedInputStream is, ArrayList<PicItem> widgetList) {   
+    static ArrayList<PicItem> returnListFromRSS(BufferedInputStream is, ArrayList<PicItem> widgetList) {   
     	//This method will parse the atom feed
     	try {
 			XmlPullParser parser = Xml.newPullParser();
@@ -69,7 +69,7 @@ public class NetworkHelper {
 							} else if (name.equalsIgnoreCase(DESCRIPTION)){
 								summary = parser.nextText();
 								currentPic.setSummary(summary);
-								currentPic.photo = downloadBitmap(getPhotoURL(summary));
+								currentPic.photo = downloadBitmap(getPOTDTemplatePhotoURL(summary));
 							} else if (name.equalsIgnoreCase(TITLE)){
 								currentPic.setTitle(parser.nextText());
 							} //else parser.nextText();
@@ -95,10 +95,10 @@ public class NetworkHelper {
     }
     
     
-    static String getPhotoURL(String subjectString){
+    static String getPOTDTemplatePhotoURL(String subjectString){
 		//passing in description string from the atom feed
 		//pulling out the bitmap to download for the pic of the day
-		//Log.d(TAG, "getPhotoURL");
+		//Log.d(TAG, "getPOTDTemplatePhotoURL");
     	StringBuilder sb = new StringBuilder(100);
 		sb.append(subjectString);
 		//Log.d(TAG, "getPhotoURL " + sb.toString());
@@ -119,6 +119,7 @@ public class NetworkHelper {
 	}
     
     static Bitmap downloadBitmap(String urlstring) {
+    	//Log.d(TAG, "download bitmap");
     	HttpURLConnection urlConnection = null;
  	    InputStream mapStream;
  	   //Log.d(TAG, "download bitmap started");
@@ -139,6 +140,7 @@ public class NetworkHelper {
     	    	}
     		    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
                 final Bitmap bitmap = BitmapFactory.decodeStream(mapStream, null, options);
+                if(bitmap.getHeight() < 30) return null;
                 return bitmap;
 			} else {
 				Log.e(TAG, "server responded with error code: " +  rcode);
@@ -155,38 +157,59 @@ public class NetworkHelper {
         return null;
     }
 
-    private ArrayList<GeoName> returnGeos(InputStream iStream) {
+    private static ArrayList<PicItem> returnGeos(InputStream iStream, ArrayList<PicItem> gList) {
+    	//Log.e(TAG,"convertStreamToString next");
+    	/*final StringBuilder jsonStr = new StringBuilder(100);
+    	jsonStr.append(iStream);*/
     	final String jsonStr = NetworkHelper.convertStreamToString(iStream);
-    	final ArrayList<GeoName> glist = new ArrayList<GeoName>();
+    	//final ArrayList<WidgetItem> glist = new ArrayList<WidgetItem>();
+    	if(gList == null) {
+    		gList = new ArrayList<PicItem>();
+    	} else {
+    		gList.clear();
+    	}
 		// getting data and if we don't we just get out of here!
 		JSONArray geonames = null;
 		try {
-			JSONObject json = new JSONObject(jsonStr);
+			JSONObject json = new JSONObject(jsonStr.toString());
 			geonames = json.getJSONArray("geonames");
+			//Log.d(TAG, "geonames created, size is " + geonames.length());
 		} catch (JSONException e) {
-			Log.e(TAG, e.getMessage());
+			Log.e(TAG, "Json exception " + e.getMessage());
 			e.printStackTrace();
+			return gList;
 		} 
-
+		PicItem add2List;
 		for (int i = 0; i < geonames.length(); i++) {
 			try {
 				JSONObject geonameObj = geonames.getJSONObject(i);
-				glist.add(new GeoName(
-						geonameObj.getString("wikipediaUrl"), geonameObj
+				add2List = new PicItem();
+				add2List.wikipediaUrl = geonameObj.getString("wikipediaUrl");
+				//setWikipediaUrl(geonameObj.getString("wikipediaUrl"));
+				add2List.setTitle(geonameObj.getString("title"));
+				add2List.setSummary(geonameObj.getString("summary"));
+				//Log.d(TAG, "wiki url is " + add2List.getWikipediaUrl());
+				gList.add(add2List);
+				/* glist.add(new PicItem( geonameObj.getString("wikipediaUrl"), geonameObj
 								.getString("title"), geonameObj
-								.getString("summary"), geonameObj
-								.getDouble("lat"), geonameObj
-								.getDouble("lng")));
+								.getString("summary"), geonameObj));*/
 			} catch(JSONException e) {
 				// ignore exception and keep going!
 				Log.e(TAG, "JSON exception");
 				e.printStackTrace();
 			}
 		}
-		return glist;
+		//Log.d(TAG, "glist size " + gList.size() + " no problem with return Geos");
+		return gList;
     }
-
-    void processPageFetch(double latitude, double longitude, ArrayList<WidgetItem> widgetList) {
+    
+    static ArrayList<PicItem> geoDataFetch(Context ctx, ArrayList<PicItem> widgetList) {
+    	double[] gps = getGPS(ctx);
+    	/*
+    	 * fetch the location or not!
+    	 * TODO, cache old data, pop toast or show that gps is not available somewhere
+    	 * TODO refresh button
+    	 */
     	final String lang;
     	if(WikiWidgetsApp.language == null) {
     		lang = "en";
@@ -194,20 +217,20 @@ public class NetworkHelper {
     		lang = WikiWidgetsApp.language;
     	}
        final StringBuilder scratch = new StringBuilder(10);
-
-    	scratch.append("http://ws.geonames.net/findNearbyWikipediaJSON?formatted=true&lat=").append(latitude).append("&lng=").append(longitude).append("&username=wikimedia&lang=").append(lang);
-		//Log.d(TAG, scratch.toString());
-
-    	networkTaskCode(scratch.toString(), widgetList);
+       scratch.append("http://ws.geonames.net/findNearbyWikipediaJSON?formatted=true&lat=").append(gps[0])
+    		.append("&lng=").append(gps[1]).append("&username=wikimedia&lang=").append(lang);
+		//Log.d(TAG, scratch.toString() + " gps found, item# " + gps.length);
+    	widgetList = parseGeonamesPage(scratch.toString(), widgetList);
         //clean up, clear stringbuilder
  	    scratch.setLength(0);
+    	gps = null;
+ 	    return widgetList;
     }
     
-    void networkTaskCode(String urlstring, ArrayList<WidgetItem> widgetSvcCollection) {
-
+    static ArrayList<PicItem> parseGeonamesPage(String urlstring, ArrayList<PicItem> widgetSvcCollection) {
     	//given a URL, fetch the web page and then process the buffered input stream into a scrolling widget collection
     	HttpURLConnection urlConnection = null;
-    	
+    	//Log.d(TAG, "parse page");
      	try {
      		final URL url = new URL(urlstring);
  	    	urlConnection = (HttpURLConnection) url.openConnection();
@@ -215,16 +238,8 @@ public class NetworkHelper {
  	    	//Log.d(TAG, "server response code: " +  rcode);
 			if ((rcode >= 200) && (rcode < 300)) {
 				InputStream is = urlConnection.getInputStream(); 
-				final ArrayList<GeoName> geoList = returnGeos(is);
-				if(widgetSvcCollection == null) {
-					widgetSvcCollection = new ArrayList<WidgetItem>();
-				} else {
-					widgetSvcCollection.clear();
-				}
-				for(GeoName gn: geoList) {
-					widgetSvcCollection.add(new WidgetItem(gn.getTitle(), gn.getSummary(), gn.getWikipediaUrl()));
-				}
-					
+				widgetSvcCollection = returnGeos(is, widgetSvcCollection);
+				//Log.d(TAG, "return geos got list, num of items is " + widgetSvcCollection.size());					
 			} else {
 				Log.e(TAG, "server responded with error code: " +  rcode);
 			}
@@ -236,11 +251,75 @@ public class NetworkHelper {
  	        		urlConnection.disconnect();
  	        	}
  	        	
- 	    }            
+ 	    } //have an array list of nearby wiki articles
+     	//now take the wikipedia url and pull a picture out of the article
+		for(PicItem geoPage: widgetSvcCollection) {
+			geoPage.setPhoto(fetchGeoPhoto("http://" + geoPage.wikipediaUrl));
+		}
+		//Log.d(TAG, "list size again " + widgetSvcCollection.size());
+		return widgetSvcCollection;
 			
     }
     
-    static ArrayList<PicItem> networkTaskCode(URL url, ArrayList<PicItem> widgetSvcCollection) {
+    static Bitmap fetchGeoPhoto(String urlstring) {
+    	
+    	StringBuilder sb = new StringBuilder(urlstring);
+		int index = sb.indexOf(".m.");
+/*		if(index == -1) {
+			index = sb.indexOf(".");
+			//Log.d(TAG, "dot index is " + index);
+			sb.insert(index, ".m");
+		}*/
+		index = sb.indexOf(".");
+		//Log.d(TAG, "dot index is " + index);
+		sb.insert(index, ".m");
+		urlstring = sb.toString();
+		sb.setLength(0);
+		//Log.d(TAG, "fetchGeoPhoto " + urlstring);
+    	HttpURLConnection urlConnection = null;
+    	boolean hasImage = false;
+     	try {
+     		final URL url = new URL(urlstring);
+ 	    	urlConnection = (HttpURLConnection) url.openConnection();
+ 	    	int rcode = urlConnection.getResponseCode();
+ 	    	//Log.d(TAG, "server response code: " +  rcode);
+			if ((rcode >= 200) && (rcode < 300)) {
+				sb.append(convertStreamToString(urlConnection.getInputStream()));
+				int start = sb.indexOf("image");
+				
+				if(start > 0) {
+					sb = new StringBuilder(sb.substring(start, sb.length()));
+					start = sb.indexOf("upload.wikimedia.org");
+					//Log.d(TAG, "start index " + start);
+					int end = sb.indexOf(" width=");
+					if(end > 0) {
+						hasImage = true;
+						Log.d(TAG, "end index " + end);
+						sb = new StringBuilder(sb.substring(start, end-8));
+						
+						sb.insert(0, "http://");
+						Log.d(TAG, sb.toString());
+					} //end, final string index										
+				} //end if, src tag present but no jpg
+			} else {
+				Log.e(TAG, "server responded with error code: " +  rcode);
+			}
+     	    //returns the list or null
+ 	    } catch (Exception e) {
+ 	            Log.w(TAG, "Error while retrieving data from " + urlstring + " " + e.toString());
+ 	        } finally {
+ 	        	if(urlConnection != null) {
+ 	        		urlConnection.disconnect();
+ 	        	}
+ 	        }   	
+    	if(hasImage) {
+    		//Log.d(TAG, "has image ");
+    		return downloadBitmap(sb.toString());
+    	} 
+    	return null;
+    }
+    
+    static ArrayList<PicItem> fetchRssFeed(URL url, ArrayList<PicItem> widgetSvcCollection) {
     	//given a URL, fetch the web page and then process the buffered input stream into a scrolling widget collection
     	HttpURLConnection urlConnection = null;
     	
@@ -256,7 +335,7 @@ public class NetworkHelper {
 				} else {
 					widgetSvcCollection.clear();
 				}
-				widgetSvcCollection = returnList(is, widgetSvcCollection);
+				widgetSvcCollection = returnListFromRSS(is, widgetSvcCollection);
 				return widgetSvcCollection;
 			} else {
 				Log.e(TAG, "server responded with error code: " +  rcode);
@@ -277,13 +356,17 @@ public class NetworkHelper {
     
 	//code borrowed from the WikimediaFoundation's Phone Gap project
 	public static String convertStreamToString(InputStream is) {
-		if(is == null) return null;
+		if(is == null) {
+			Log.e(TAG, "null input stream when converting to string");
+			return null;
+		}
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 		StringBuilder sb = new StringBuilder();
 		String line = null;
-
+		//Log.d(TAG, "read line by line");
 		try {
 			while ((line = reader.readLine()) != null) {
+				//Log.d(TAG, line);
 				sb.append(line + "\n");
 			}
 		} catch (IOException e) {
@@ -292,10 +375,12 @@ public class NetworkHelper {
 			try {
 				is.close();
 			} catch (IOException e) {
+				Log.e(TAG,"error closing buffered reader");
 				e.printStackTrace();
 			}
 		}
-		return sb.toString();
+		//Log.d(TAG, "returning now, " + sb.toString())
+;		return sb.toString();
 	}
 	
 	//code borrowed from the WikimediaFoundation's Phone Gap project.  The NearMe activity is cool!

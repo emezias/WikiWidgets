@@ -11,9 +11,9 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-public class AtomWidgetViewFactory implements RemoteViewsService.RemoteViewsFactory {
+public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactory {
     private ArrayList<PicItem> mListWidgetItems;
-    private boolean photoFeed;
+    private int mWidgetType;
     private static String mPkg;
     //private static Context mContext;
     private static final String TAG = "AtomWidgetViewFactory";
@@ -24,18 +24,16 @@ public class AtomWidgetViewFactory implements RemoteViewsService.RemoteViewsFact
         Log.d(TAG, "package string set " + mPkg);
     }*/
     
-    public AtomWidgetViewFactory(Context context, Intent intent, boolean pics) {
+    public AtomFeedViewFactory(Context context, Intent intent, int widget_id) {
     	mPkg = context.getPackageName();
-        photoFeed = pics;
+    	mWidgetType = widget_id;
     }
 
     public void onCreate() {
         // In onCreate() you setup any connections / cursors to your data source. Heavy lifting,
         // for example downloading or creating content etc, should be deferred to onDataSetChanged()
         // or getViewAt(). Taking more than 20 seconds in this call will result in an ANR.
-    	Log.d(TAG, "atom onCreate");
-    	Log.d(TAG, "onCreate boolean value is " + photoFeed);
-    	
+    	Log.d(TAG, "atom onCreate");    	
     }
     
         
@@ -43,13 +41,15 @@ public class AtomWidgetViewFactory implements RemoteViewsService.RemoteViewsFact
     	//use an RSS feed to build the widget collection 
     	URL webpage = null;
     	try {
-    		if(photoFeed) {
-    			webpage = new URL(NetworkHelper.POTD_STREAM);
-    		} else {
-    			webpage = new URL(NetworkHelper.FEATURED_FEED);
-    		}
-			
-			mListWidgetItems = NetworkHelper.networkTaskCode(webpage, mListWidgetItems);
+			switch(mWidgetType) {
+			case R.xml.fon_feature_widget_info:
+			case R.xml.wiki_feature_widget_info:
+				webpage = new URL(NetworkHelper.FEATURED_FEED);
+				break;
+			case R.xml.wikipic_widget_info:
+				webpage = new URL(NetworkHelper.POTD_STREAM);
+			}
+			mListWidgetItems = NetworkHelper.fetchRssFeed(webpage, mListWidgetItems);
 		} catch (MalformedURLException e) {
 			Log.e(TAG, "createList exception " + e.getMessage());
 			e.printStackTrace();
@@ -71,15 +71,18 @@ public class AtomWidgetViewFactory implements RemoteViewsService.RemoteViewsFact
     }
     
     private int fetchId(int position) {
-    	if(photoFeed) {
-    		Log.d(TAG, "photoFeed true");
-    		return (position % 2 == 0 ? R.layout.pic_widget_item
-                    : R.layout.pic_widget_item2);
-    	} else {
-    		Log.d(TAG, "photoFeed false");
+		switch(mWidgetType) {
+		case R.xml.wiki_feature_widget_info:
     		return (position % 2 == 0 ? R.layout.feature_widget_item
                     : R.layout.feature_widget_item2);
+		case R.xml.fon_feature_widget_info:
+		case R.xml.wikipic_widget_info:
+    		return (position % 2 == 0 ? R.layout.pic_widget_item
+                    : R.layout.pic_widget_item2);
     	}
+		return (position % 2 == 0 ? R.layout.pic_widget_item
+                : R.layout.pic_widget_item2);
+
     }
 
     public RemoteViews getViewAt(int position) {

@@ -4,9 +4,9 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 
-public class PicWidgetProvider extends FeedProvider {
-	//private static final String TAG = "PicWidgetProvider";
-
+public class FeatureStackProvider extends BaseAtomFeedProvider {
+	//private static final String TAG = "FeatureWidgetProvider";
+	//This class sets an instance variable used by the FeedProvider to determine the widget type
     
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
@@ -21,8 +21,7 @@ public class PicWidgetProvider extends FeedProvider {
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-        mLayoutId = R.xml.wikipic_widget_info;
-        //Log.d(TAG, "pic enabled");
+        mLayoutId = R.xml.wiki_feature_widget_info;
         //This method is run once per widget instance, when the widget is first created
     }
 
@@ -30,14 +29,14 @@ public class PicWidgetProvider extends FeedProvider {
     public void onReceive(Context context, Intent intent) {
         //Broadcast receiver, code will execute when a title of the item in the collection is touched
         super.onReceive(context, intent);
-        mLayoutId = R.xml.wikipic_widget_info;
-
+        mLayoutId = R.xml.wiki_feature_widget_info;
+        //Log.d(TAG, "feature onReceive");
     }
      
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // update each of the widgets with the remote adapter
-        mLayoutId = R.xml.wikipic_widget_info;
+    	mLayoutId = R.xml.wiki_feature_widget_info;
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 }

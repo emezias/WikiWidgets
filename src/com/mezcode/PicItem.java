@@ -2,11 +2,10 @@ package com.mezcode;
 
 import android.graphics.Bitmap;
 import android.text.Html;
-import android.util.Log;
 
 public class PicItem {
 
-	//private static final String TAG = "PicItem";
+	private static final String TAG = "PicItem";
 	String wikipediaUrl;
 	String title;
 	String summary;
@@ -22,14 +21,14 @@ public class PicItem {
 		//Log.d(TAG, "link item is " + wikipediaUrl);
 		sb.append(wikipediaUrl);
 		index = sb.indexOf("http");
-		if(index != 0) {
+		if(index > 0) {
 			sb.delete(0, index);
 		}
-		index = sb.indexOf(".m");
+		index = sb.indexOf(".m.");
 		if(index == -1) {
 			index = sb.indexOf(".");
 			//Log.d(TAG, "dot index is " + index);
-			sb.insert(sb.indexOf("."), ".m");
+			sb.insert(index, ".m");
 		}
 		
 		/*if(sb.indexOf("featured_article") > 0) {

@@ -1,13 +1,12 @@
 package com.mezcode;
 
 import java.io.File;
-import java.util.ArrayList;
+
 import android.app.Application;
 import android.content.Context;
 
 public class WikiWidgetsApp extends Application {
 
-	public static ArrayList<GeoName> geonames;
 	public static String language = "en";
 
 

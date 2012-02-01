@@ -1,15 +1,13 @@
 package com.mezcode;
 
 import android.content.Intent;
-import android.util.Log;
 import android.widget.RemoteViewsService;
 
-public class FeatureWidgetService extends RemoteViewsService {
+public class FonFeatureStackService extends RemoteViewsService {
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         //return new WikiRemoteViewsFactory(this.getApplicationContext(), intent);
-    	Log.d("FeatureWidgetService", "FeatureWidgetService");
-        return new AtomWidgetViewFactory(this.getApplicationContext(), intent, false);
+        return new AtomFeedViewFactory(this.getApplicationContext(), intent, R.xml.fon_feature_widget_info);
     }
 
 }

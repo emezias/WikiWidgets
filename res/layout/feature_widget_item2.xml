@@ -5,29 +5,34 @@
     android:layout_height="match_parent"
     android:background="@drawable/pic_item_background2" 
     >
-    <ImageView android:id="@+id/widget_pic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxHeight="400dp"
-        android:src="@drawable/icon"
-        android:contentDescription="@string/app_name"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        />
-    <TextView 
-	    android:id="@+id/widget_item"
-	    android:layout_width="wrap_content"
-   		android:layout_height="wrap_content"
-   		android:minWidth="100dp"
-	    android:textAppearance="?android:attr/textAppearanceLarge"
-	    android:textColor="#ffffff"
-	    android:textStyle="bold"
-	    android:padding="8dip"
-		android:layout_toRightOf="@id/widget_pic"
-		android:layout_alignBottom="@id/widget_pic"
-		android:layout_marginTop="12dp"
-		/>
+    
+    <LinearLayout android:id="@+id/header"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginLeft="10dp"
+	    android:gravity="center">
+	    <ImageView android:id="@+id/widget_pic"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="right"
+	        android:src="@drawable/icon"
+	        android:contentDescription="@string/app_name"
+	        android:layout_marginTop="8dp"
+	        android:layout_marginRight="10dp"
+	        />
+	    <TextView 
+		    android:id="@+id/widget_item"
+		    android:layout_width="wrap_content"
+	   		android:layout_height="wrap_content"
+	   		android:minWidth="80dp"
+		    android:layout_gravity="left"
+		    android:textAppearance="?android:attr/textAppearanceLarge"
+		    android:textColor="#ffffff"
+		    android:textStyle="bold"
+		    android:padding="8dip"
+			android:layout_marginTop="12dp"
+			/>
+	    </LinearLayout>
 	<TextView 
 	    android:id="@+id/widget_summary"
 	    android:layout_width="match_parent"
@@ -37,7 +42,7 @@
 	    android:ellipsize="marquee"
 	    android:maxLines="25"
 	    android:textAppearance="?android:attr/textAppearanceMedium"
-	    android:layout_below="@id/widget_pic"
+	    android:layout_below="@id/header"
 	    android:padding="6dip"
 		android:layout_marginTop="3dp"
 		/>

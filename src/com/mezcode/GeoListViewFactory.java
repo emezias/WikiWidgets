@@ -9,20 +9,12 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-public class WikiWidgetService extends RemoteViewsService {
-    @Override
-    public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new WikiRemoteViewsFactory(this.getApplicationContext(), intent);
-    }
-
-}
-
-class WikiRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
+public class GeoListViewFactory implements RemoteViewsService.RemoteViewsFactory {
     private ArrayList<PicItem> mListWidgetItems;
     private static Context mListContext;
     private static final String TAG = "WikiWidgetService";
 
-    public WikiRemoteViewsFactory(Context context, Intent intent) {
+    public GeoListViewFactory(Context context, Intent intent) {
         mListContext = context.getApplicationContext();        
     }
 
@@ -106,7 +98,7 @@ class WikiRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     public void onDataSetChanged() {
         // For use with a content provider?  Run after 
-    	Log.d(TAG, "onDataSetChanged");
+    	//Log.d(TAG, "onDataSetChanged");
     	createList();
     }
 }

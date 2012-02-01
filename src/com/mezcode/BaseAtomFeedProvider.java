@@ -10,7 +10,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-public class FeedProvider extends AppWidgetProvider {
+public class BaseAtomFeedProvider extends AppWidgetProvider {
 	/*
 	 * This class is the base for the RSS Atom Feed widgets that are displayed in a stackview
 	 * The collection content is either the photo of the day or the featured article of the day, pulled in from an rss feed for the last 20 days
@@ -67,9 +67,11 @@ public class FeedProvider extends AppWidgetProvider {
     private Intent switchOnId(Context ctx, int layoutId) {
     	switch(layoutId) {
     	case R.xml.wiki_feature_widget_info:
-    		return new Intent(ctx, FeatureWidgetService.class);
+    		return new Intent(ctx, FeatureStackService.class);
     	case R.xml.wikipic_widget_info:
-    		return new Intent(ctx, PicWidgetService.class);
+    		return new Intent(ctx, PicStackService.class);
+    	case R.xml.fon_feature_widget_info:
+    		return new Intent(ctx, FonFeatureStackService.class);
     	}
     	Log.e(TAG, "error assigning layoutId, null intent");
     	return null;
@@ -78,11 +80,13 @@ public class FeedProvider extends AppWidgetProvider {
     private Intent switchIntentOnId(Context ctx, int layoutId) {
     	switch(layoutId) {
     	case R.xml.wiki_feature_widget_info:
-    		Log.d(TAG, "pic provider class sent");
-    		return new Intent(ctx, PicWidgetProvider.class);
+    		//Log.d(TAG, "pic provider class sent");
+    		return new Intent(ctx, PicStackProvider.class);
     	case R.xml.wikipic_widget_info:
-    		Log.d(TAG, "feature class sent");
-    		return new Intent(ctx, FeatureWidgetProvider.class);
+    		//Log.d(TAG, "feature class sent");
+    		return new Intent(ctx, FeatureStackProvider.class);
+    	case R.xml.fon_feature_widget_info:
+    		return new Intent(ctx, FonFeatureStackProvider.class);
     	}
     	Log.e(TAG, "error assigning layoutId, null intent");
     	return null;

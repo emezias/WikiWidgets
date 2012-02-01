@@ -4,7 +4,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 
-public class FeatureWidgetProvider extends FeedProvider {
+public class FonFeatureStackProvider extends BaseAtomFeedProvider {
 	//private static final String TAG = "FeatureWidgetProvider";
 	//This class sets an instance variable used by the FeedProvider to determine the widget type
     
@@ -21,7 +21,7 @@ public class FeatureWidgetProvider extends FeedProvider {
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-        mLayoutId = R.xml.wiki_feature_widget_info;
+        mLayoutId = R.xml.fon_feature_widget_info;
         //This method is run once per widget instance, when the widget is first created
     }
 
@@ -29,14 +29,14 @@ public class FeatureWidgetProvider extends FeedProvider {
     public void onReceive(Context context, Intent intent) {
         //Broadcast receiver, code will execute when a title of the item in the collection is touched
         super.onReceive(context, intent);
-        mLayoutId = R.xml.wiki_feature_widget_info;
+        mLayoutId = R.xml.fon_feature_widget_info;
         //Log.d(TAG, "feature onReceive");
     }
      
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // update each of the widgets with the remote adapter
-    	mLayoutId = R.xml.wiki_feature_widget_info;
+        mLayoutId = R.xml.fon_feature_widget_info;
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 }
