@@ -12,10 +12,12 @@ import android.widget.RemoteViewsService;
 public class GeoListViewFactory implements RemoteViewsService.RemoteViewsFactory {
     private ArrayList<PicItem> mListWidgetItems;
     private static Context mListContext;
-    private static final String TAG = "WikiWidgetService";
+    private static final String TAG = "GeoListViewFactory";
+    private int mListType;
 
-    public GeoListViewFactory(Context context, Intent intent) {
+    public GeoListViewFactory(Context context, Intent intent, int widgetId) {
         mListContext = context.getApplicationContext();        
+        mListType = R.xml.geo_list_info;
     }
 
     public void onCreate() {
@@ -27,7 +29,7 @@ public class GeoListViewFactory implements RemoteViewsService.RemoteViewsFactory
     
     void createList( ) {
     	mListWidgetItems = NetworkHelper.geoDataFetch(mListContext, mListWidgetItems);
-    	Log.d(TAG, "end for loop size is " + mListWidgetItems.size());
+    	Log.d(TAG, "end createList, size is " + mListWidgetItems.size());
     }
     
     public void onDestroy() {
@@ -47,15 +49,24 @@ public class GeoListViewFactory implements RemoteViewsService.RemoteViewsFactory
         // position will always range from 0 to getCount() - 1.
         // Construct a remote views item based on our widget item xml file 
         // set the title and summary text based on the position.
-    	final int itemId = (position % 2 == 0 ? R.layout.widget_listitem
-                : R.layout.widget_listitem2);
-        final RemoteViews rv = new RemoteViews(mListContext.getPackageName(), itemId);
-        final PicItem displayItem = mListWidgetItems.get(position);
+    	/*final int itemId = (position % 2 == 0 ? R.layout.widget_listitem
+                : R.layout.widget_listitem2);*/
+    	final int itemId = (position % 2 == 0 ? R.layout.pic_widget_item
+                : R.layout.pic_widget_item2);
+        final RemoteViews rv = new RemoteViews("com.mezcode", itemId);
+        rv.setTextViewText(R.id.widget_item, mListWidgetItems.get(position).title);
+        Log.d(TAG, "rv title is " + mListWidgetItems.get(position).title);
+        rv.setTextViewText(R.id.widget_summary, mListWidgetItems.get(position).summary);
+        if(mListWidgetItems.get(position).photo != null) {
+        	rv.setImageViewBitmap(R.id.widget_pic, mListWidgetItems.get(position).photo);
+        }
+        /*final PicItem displayItem = mListWidgetItems.get(position);
         rv.setTextViewText(R.id.widget_item, displayItem.title);
+        Log.d(TAG, "rv title is " + displayItem.title);
         rv.setTextViewText(R.id.widget_summary, displayItem.summary);
         if(displayItem.photo != null) {
         	rv.setImageViewBitmap(R.id.widget_pic, displayItem.photo);
-        }
+        }*/
         /*rv.setTextViewText(R.id.widget_url, mWidgetItems.get(position).url);
          * TODO Consider an active link in a Text view as part of the layout 
          * This could replace the pending intent or provide the functionality with 2.x releases
@@ -64,7 +75,7 @@ public class GeoListViewFactory implements RemoteViewsService.RemoteViewsFactory
         // set on the collection view in WikiWidgetProvider.
         final Bundle extras = new Bundle();
         extras.putString(WikiWidgetProvider.URL_TAG, "http://" + mListWidgetItems.get(position).wikipediaUrl);
-        //Log.d(TAG, "set url as extra " + mWidgetItems.get(position).url);
+        Log.d(TAG, "set url as extra " + mListWidgetItems.get(position).wikipediaUrl);
         final Intent fillInIntent = new Intent(); 
         fillInIntent.putExtras(extras);
         //fillInIntent.putExtra(WikiWidgetProvider.URL_TAG, mWidgetItems.get(position).url);

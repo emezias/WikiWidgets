@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
     <!-- update happens every four hours, 14 400 seconds --> 
 	<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:minWidth="544dp"
-    android:minHeight="544dp"
-    android:updatePeriodMillis="14400"
+    android:minWidth="390dp"
+    android:minHeight="460dp"
+    android:updatePeriodMillis="14000"
     android:initialLayout="@layout/widget_list"
     android:previewImage="@drawable/list_widget_preview"
     /> 

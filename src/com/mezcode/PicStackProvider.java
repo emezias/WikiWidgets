@@ -4,7 +4,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 
-public class PicStackProvider extends BaseAtomFeedProvider {
+public class PicStackProvider extends BaseStackProvider {
 	//private static final String TAG = "PicWidgetProvider";
 
     
@@ -21,7 +21,7 @@ public class PicStackProvider extends BaseAtomFeedProvider {
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-        mLayoutId = R.xml.wikipic_widget_info;
+        mLayoutId = R.xml.pic_stack_info;
         //Log.d(TAG, "pic enabled");
         //This method is run once per widget instance, when the widget is first created
     }
@@ -30,14 +30,14 @@ public class PicStackProvider extends BaseAtomFeedProvider {
     public void onReceive(Context context, Intent intent) {
         //Broadcast receiver, code will execute when a title of the item in the collection is touched
         super.onReceive(context, intent);
-        mLayoutId = R.xml.wikipic_widget_info;
+        mLayoutId = R.xml.pic_stack_info;
 
     }
      
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // update each of the widgets with the remote adapter
-        mLayoutId = R.xml.wikipic_widget_info;
+        mLayoutId = R.xml.pic_stack_info;
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 }

@@ -1,6 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="514dp"
-    android:layout_height="514dp">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <ListView 
         android:id="@+id/list_view"
         android:layout_width="match_parent"
@@ -9,7 +9,7 @@
         android:scrollbarAlwaysDrawHorizontalTrack="true"
         android:loopViews="true" />
     <TextView 
-        android:id="@+id/empty_view"
+        android:id="@+id/empty_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"

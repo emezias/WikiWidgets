@@ -12,7 +12,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactory {
-    private ArrayList<PicItem> mListWidgetItems;
+    private ArrayList<PicItem> mFeedWidgetItems;
     private int mWidgetType;
     private static String mPkg;
     //private static Context mContext;
@@ -42,14 +42,14 @@ public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactor
     	URL webpage = null;
     	try {
 			switch(mWidgetType) {
-			case R.xml.fon_feature_widget_info:
-			case R.xml.wiki_feature_widget_info:
+			case R.xml.fon_feature_stack_info:
+			case R.xml.feature_stack_info:
 				webpage = new URL(NetworkHelper.FEATURED_FEED);
 				break;
-			case R.xml.wikipic_widget_info:
+			case R.xml.pic_stack_info:
 				webpage = new URL(NetworkHelper.POTD_STREAM);
 			}
-			mListWidgetItems = NetworkHelper.fetchRssFeed(webpage, mListWidgetItems);
+			mFeedWidgetItems = NetworkHelper.fetchRssFeed(webpage, mFeedWidgetItems);
 		} catch (MalformedURLException e) {
 			Log.e(TAG, "createList exception " + e.getMessage());
 			e.printStackTrace();
@@ -60,23 +60,23 @@ public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactor
     public void onDestroy() {
         // In onDestroy() you should tear down anything that was setup for your data source,
         // eg. cursors, connections, etc.
-        mListWidgetItems.clear();
+        mFeedWidgetItems.clear();
     }
 
     public int getCount() {
     	//Log.d(TAG, "getCount");
-    	if(mListWidgetItems != null) {
-    		return mListWidgetItems.size();
+    	if(mFeedWidgetItems != null) {
+    		return mFeedWidgetItems.size();
     	} else return 0;
     }
     
     private int fetchId(int position) {
 		switch(mWidgetType) {
-		case R.xml.wiki_feature_widget_info:
+		case R.xml.feature_stack_info:
     		return (position % 2 == 0 ? R.layout.feature_widget_item
                     : R.layout.feature_widget_item2);
-		case R.xml.fon_feature_widget_info:
-		case R.xml.wikipic_widget_info:
+		case R.xml.fon_feature_stack_info:
+		case R.xml.pic_stack_info:
     		return (position % 2 == 0 ? R.layout.pic_widget_item
                     : R.layout.pic_widget_item2);
     	}
@@ -92,12 +92,12 @@ public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactor
         // set the title and summary text based on the position.
     	final int itemId = fetchId(position);
         final RemoteViews rv = new RemoteViews(mPkg, itemId);
-        rv.setTextViewText(R.id.widget_item, mListWidgetItems.get(position).title);
-        rv.setTextViewText(R.id.widget_summary, mListWidgetItems.get(position).summary);
+        rv.setTextViewText(R.id.widget_item, mFeedWidgetItems.get(position).title);
+        rv.setTextViewText(R.id.widget_summary, mFeedWidgetItems.get(position).summary);
         /*************/
         
-        if(mListWidgetItems.get(position).photo != null) {
-        	rv.setImageViewBitmap(R.id.widget_pic, mListWidgetItems.get(position).photo);
+        if(mFeedWidgetItems.get(position).photo != null) {
+        	rv.setImageViewBitmap(R.id.widget_pic, mFeedWidgetItems.get(position).photo);
         } else {
         	rv.setImageViewResource(R.id.widget_pic, R.drawable.icon);
         }
@@ -105,7 +105,7 @@ public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactor
         // Next, we set a fill-intent which to fill-in the pending intent template
         // set on the collection view in WikiWidgetProvider.
         final Bundle extras = new Bundle();
-        extras.putString(WikiWidgetProvider.URL_TAG, mListWidgetItems.get(position).wikipediaUrl);
+        extras.putString(WikiWidgetProvider.URL_TAG, mFeedWidgetItems.get(position).wikipediaUrl);
         //Log.d(TAG, "set url as extra " + mListWidgetItems.get(position).wikipediaUrl);
         final Intent fillInIntent = new Intent(); 
         fillInIntent.putExtras(extras);

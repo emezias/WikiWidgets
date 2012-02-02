@@ -19,8 +19,8 @@ public class WikiWidgetsActivity extends Activity {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.widget_activity);
 	    //cache the WebView instead of doing a lookup for each call
-	    mWebView = (WebView) findViewById(R.id.webview);
-	    mWebView.getSettings().setJavaScriptEnabled(true);
+	    mWebView = (WebView) findViewById(R.id.my_webview);
+	    if(mWebView != null) mWebView.getSettings().setJavaScriptEnabled(true);
 	    
 	}
 
@@ -37,9 +37,15 @@ public class WikiWidgetsActivity extends Activity {
 	    	location = "http://m.wikipedia.org/";
 	    }
 	    
-	    //Log.d(TAG, "loading now " + location);
-    	mWebView.loadUrl(location);
-	    mWebView.invalidate();
+	    
+	    if(mWebView != null) {
+	    	Log.d(TAG, "loading now " + location);
+	    	mWebView.loadUrl(location);
+		    mWebView.invalidate();
+	    } else {
+	    	Log.d(TAG, "webview is null");
+	    }
+    	
 	}
 	
 	@Override

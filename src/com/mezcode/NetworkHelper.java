@@ -219,8 +219,8 @@ public class NetworkHelper {
        final StringBuilder scratch = new StringBuilder(10);
        scratch.append("http://ws.geonames.net/findNearbyWikipediaJSON?formatted=true&lat=").append(gps[0])
     		.append("&lng=").append(gps[1]).append("&username=wikimedia&lang=").append(lang);
-		//Log.d(TAG, scratch.toString() + " gps found, item# " + gps.length);
     	widgetList = parseGeonamesPage(scratch.toString(), widgetList);
+		Log.d(TAG, scratch.toString() + " list length = " + widgetList.size());
         //clean up, clear stringbuilder
  	    scratch.setLength(0);
     	gps = null;
@@ -230,7 +230,7 @@ public class NetworkHelper {
     static ArrayList<PicItem> parseGeonamesPage(String urlstring, ArrayList<PicItem> widgetSvcCollection) {
     	//given a URL, fetch the web page and then process the buffered input stream into a scrolling widget collection
     	HttpURLConnection urlConnection = null;
-    	//Log.d(TAG, "parse page");
+    	Log.d(TAG, "parse page");
      	try {
      		final URL url = new URL(urlstring);
  	    	urlConnection = (HttpURLConnection) url.openConnection();

@@ -7,7 +7,7 @@ public class FonFeatureStackService extends RemoteViewsService {
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         //return new WikiRemoteViewsFactory(this.getApplicationContext(), intent);
-        return new AtomFeedViewFactory(this.getApplicationContext(), intent, R.xml.fon_feature_widget_info);
+        return new AtomFeedViewFactory(this.getApplicationContext(), intent, R.xml.fon_feature_stack_info);
     }
 
 }

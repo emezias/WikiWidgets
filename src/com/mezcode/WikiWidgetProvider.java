@@ -78,7 +78,7 @@ public class WikiWidgetProvider extends AppWidgetProvider {
         	Log.d(TAG, "wiki provider update, scheduled every 14,400 seconds");
             // Here we setup the intent which points to the WikiWidgetService which will
             // provide the views for this collection.
-            Intent intent = new Intent(context, WikiWidgetService.class);
+            Intent intent = new Intent(context, GeoListService.class);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_list);

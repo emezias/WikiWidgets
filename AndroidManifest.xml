@@ -36,15 +36,15 @@
         </activity>
         
         
-        <receiver android:name=".WikiWidgetProvider" android:enabled="true">
+        <receiver android:name=".GeoListProvider" android:enabled="true">
 	    	<intent-filter>
 	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 	    	</intent-filter>
 	   	 	<meta-data android:name="android.appwidget.provider" android:label="List of local articles"
-	               android:resource="@xml/wiki_widget_info"  />
+	               android:resource="@xml/geo_list_info"  />
 		</receiver>
 		
-		<service android:name=".WikiWidgetService"
+		<service android:name=".GeoListService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
 		
@@ -53,7 +53,7 @@
 	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 	    	</intent-filter>
 	   	 	<meta-data android:name="android.appwidget.provider" android:label="Stack of photo of the day articles"
-	               android:resource="@xml/wikipic_widget_info"  />
+	               android:resource="@xml/pic_stack_info"  />
 		</receiver>
 		
 		<service android:name=".PicStackService"
@@ -65,7 +65,7 @@
 	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 	    	</intent-filter>
 	   	 	<meta-data android:name="android.appwidget.provider" android:label="Featured articles"
-	               android:resource="@xml/wiki_feature_widget_info"  />
+	               android:resource="@xml/feature_stack_info"  />
 		</receiver>
 		
 		<service android:name=".FeatureStackService"
@@ -77,7 +77,7 @@
 	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 	    	</intent-filter>
 	   	 	<meta-data android:name="android.appwidget.provider" android:label="Featured articles"
-	               android:resource="@xml/fon_feature_widget_info"  />
+	               android:resource="@xml/fon_feature_stack_info"  />
 		</receiver>
 		
 		<service android:name=".FonFeatureStackService"
