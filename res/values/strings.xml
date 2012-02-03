@@ -5,4 +5,19 @@
     <string name="app_name">WikiWidgets</string>
     <string name="search_hint">Current location</string>
     <string name="empty_view_text">This is the empty view</string>
+    <string name="load_msg">Loading Wikipedia</string>
+    <string name="list_msg">Scroll through</string>
+    
+    <string name="geoListTablet">Wild WikiWidgets \nLarge List of Nearby Wiki pages</string>
+    <string name="geoListFon">Wild WikiWidgets \nSmall List of Nearby pages</string>
+    <string name="geoStackTablet">Wild WikiWidgets \nLarge Stack, Nearby Wiki pages</string>
+    <string name="geoStackFon">Wild WikiWidgets \nSmall Stack of Nearby Wiki pages</string>
+    <string name="photoListTablet">Wild WikiWidgets \nLarge List of Wiki photos</string>
+    <string name="photoListFon">Wild WikiWidgets \nSmall List of Photo pages</string>
+    <string name="photoStackTablet">Wild WikiWidgets \nLarge Stack, Photo pages</string>
+    <string name="photoStackFon">Wild WikiWidgets \nSmall Stack of Photo pages</string>
+    <string name="featureListTablet">Wild WikiWidgets \nLarge List of Featured Wiki pages</string>
+    <string name="featureListFon">Wild WikiWidgets \nSmall List of Feature pages</string>
+    <string name="featureStackTablet">Wild WikiWidgets \nLarge Stack, Feature Wiki pages</string>
+    <string name="featureStackFon">Wild WikiWidgets \nSmall Stack of Feature pages</string>
 </resources>

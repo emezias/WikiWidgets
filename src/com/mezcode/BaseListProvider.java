@@ -32,7 +32,7 @@ public class BaseListProvider extends AppWidgetProvider {
         //Broadcast receiver, code will execute when a title of the item in the collection is touched
     	final String action = intent.getAction();
         if (action.equals(BaseStackProvider.CLICK)) {
-        	Log.d(TAG, "base list provider receive " + intent.getStringExtra(BaseStackProvider.URL_TAG));
+        	//Log.d(TAG, "base list provider receive " + intent.getStringExtra(BaseStackProvider.URL_TAG));
             BaseStackProvider.clickWidgetShowPage(context, intent.getStringExtra(BaseStackProvider.URL_TAG));
             //Display a toast and display the page
         }

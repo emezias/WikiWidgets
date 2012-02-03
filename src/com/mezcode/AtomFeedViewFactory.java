@@ -41,11 +41,16 @@ public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactor
     	URL webpage = null;
     	try {
 			switch(mWidgetType) {
-			case R.xml.fon_feature_stack_info:
 			case R.xml.feature_stack_info:
+			case R.xml.feature_list_info:
+			case R.xml.fon_feature_stack_info:
+			case R.xml.fon_feature_list_info:
 				webpage = new URL(NetworkHelper.FEATURED_FEED);
 				break;
 			case R.xml.pic_stack_info:
+			case R.xml.pic_list_info:
+			case R.xml.fon_foto_stack_info:
+			case R.xml.fon_foto_list_info:
 				webpage = new URL(NetworkHelper.POTD_STREAM);
 			}
 			mFeedWidgetItems = NetworkHelper.fetchRssFeed(webpage);
@@ -68,7 +73,7 @@ public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactor
     		return mFeedWidgetItems.length;
     	} else return 0;
     }
-    
+        
     public static int fetchId(int position, int viewID) {
 		switch(viewID) {
 		case R.xml.feature_stack_info:
@@ -77,8 +82,14 @@ public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactor
                     : R.layout.feature_widget_item2);
 		case R.xml.fon_feature_stack_info:
 		case R.xml.fon_geo_stack_info:
+		case R.xml.fon_foto_stack_info:
+		case R.xml.fon_foto_list_info:
+		case R.xml.fon_geo_list_info:
+		case R.xml.fon_feature_list_info:
 		case R.xml.pic_stack_info:
+		case R.xml.pic_list_info:
 		case R.xml.geo_list_info:
+		case R.xml.feature_list_info:
     		return (position % 2 == 0 ? R.layout.pic_widget_item
                     : R.layout.pic_widget_item2);
     	}
@@ -130,6 +141,7 @@ public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactor
     }
 
     public int getViewTypeCount() {
+    	//the list switches between 2 xml layouts with different backgrounds
         return 2;
     }
 

@@ -34,91 +34,164 @@
 				<data android:host="*.wikipedia.org" android:scheme="https" />
 			</intent-filter>
         </activity>
-        
-        
-        <receiver android:name=".GeoListProvider" android:enabled="true">
+                
+<receiver android:name=".PicStackProvider" 
+		    android:label="@string/photoStackTablet"
+		    android:enabled="true">
 	    	<intent-filter>
 	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 	    	</intent-filter>
-	   	 	<meta-data android:name="android.appwidget.provider" android:label="List of local articles"
-	               android:resource="@xml/geo_list_info"  />
+	   	 	<meta-data android:name="android.appwidget.provider" 
+	               android:resource="@xml/pic_stack_info"  />
 		</receiver>
-		
-		<service android:name=".GeoListService"
+		<service android:name=".PicStackService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
-		
-		<receiver android:name=".GeoStackProvider" android:enabled="true">
+
+		<receiver android:name=".PicListProvider" 
+		    android:label="@string/photoListTablet"
+		    android:enabled="true">
+	    	<intent-filter>
+	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+	    	</intent-filter>
+	   	 	<meta-data android:name="android.appwidget.provider" 
+	               android:resource="@xml/pic_list_info"  />
+		</receiver>
+		<service android:name=".PicListService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />
+
+		<receiver android:name=".FonFotoStackProvider" 
+		    android:label="@string/photoStackFon"
+		    android:enabled="true">
+	    	<intent-filter>
+	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+	    	</intent-filter>
+	   	 	<meta-data android:name="android.appwidget.provider" 
+	               android:resource="@xml/fon_foto_stack_info"  />
+		</receiver>
+		<service android:name=".FonFotoStackService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />
+
+		<receiver android:name=".FonFotoListProvider" 
+		    android:label="@string/photoListFon"
+		    android:enabled="true">
+	    	<intent-filter>
+	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+	    	</intent-filter>
+	   	 	<meta-data android:name="android.appwidget.provider" 
+	               android:resource="@xml/fon_foto_list_info"  />
+		</receiver>
+		<service android:name=".PicListService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />
+				
+<receiver android:name=".GeoStackProvider" 
+		    android:label="@string/geoStackTablet"
+		    android:enabled="true">
 	    	<intent-filter>
 	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 	    	</intent-filter>
 	   	 	<meta-data android:name="android.appwidget.provider" android:label="Stack of nearby articles"
 	               android:resource="@xml/geo_stack_info"  />
 		</receiver>
-		
 		<service android:name=".GeoStackService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
-
-		<receiver android:name=".FonGeoStackProvider" android:enabled="true">
+		
+		<receiver android:name=".GeoListProvider" 
+		    android:label="@string/geoListTablet"
+		    android:enabled="true">
 	    	<intent-filter>
 	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 	    	</intent-filter>
-	   	 	<meta-data android:name="android.appwidget.provider" android:label="Stack of nearby articles"
+	   	 	<meta-data android:name="android.appwidget.provider" 
+	               android:resource="@xml/geo_list_info"  />
+		</receiver>
+		<service android:name=".GeoListService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />
+
+		<receiver android:name=".FonGeoStackProvider" 
+		    android:label="@string/geoStackFon"
+		    android:enabled="true">
+	    	<intent-filter>
+	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+	    	</intent-filter>
+	   	 	<meta-data android:name="android.appwidget.provider" 
 	               android:resource="@xml/fon_geo_stack_info"  />
 		</receiver>
-		
 		<service android:name=".FonGeoStackService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
 				
-		<receiver android:name=".PicStackProvider" android:enabled="true">
+		<receiver android:name=".FonGeoListProvider" 
+            android:label="@string/geoListFon"
+            android:enabled="true">
 	    	<intent-filter>
 	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 	    	</intent-filter>
-	   	 	<meta-data android:name="android.appwidget.provider" android:label="Stack of photo of the day articles"
-	               android:resource="@xml/pic_stack_info"  />
+	   	 	<meta-data android:name="android.appwidget.provider" 
+	               android:resource="@xml/fon_geo_list_info"  />
 		</receiver>
-		
-		<service android:name=".PicStackService"
+		<service android:name=".FonGeoListService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
-		
-		<receiver android:name=".FeatureStackProvider" android:enabled="true">
+				
+<receiver android:name=".FeatureStackProvider" 
+		    android:label="@string/featureStackTablet"
+		    android:enabled="true">
 	    	<intent-filter>
 	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 	    	</intent-filter>
-	   	 	<meta-data android:name="android.appwidget.provider" android:label="Featured articles"
+	   	 	<meta-data android:name="android.appwidget.provider" 
 	               android:resource="@xml/feature_stack_info"  />
 		</receiver>
-		
 		<service android:name=".FeatureStackService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
-		
-		<receiver android:name=".FonFeatureStackProvider" android:enabled="true">
+
+		<receiver android:name=".FeatureListProvider" 
+		    android:label="@string/featureListTablet"
+		    android:enabled="true">
+	    	<intent-filter>
+	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+	    	</intent-filter>
+	   	 	<meta-data android:name="android.appwidget.provider" 
+	               android:resource="@xml/feature_list_info"  />
+		</receiver>
+		<service android:name=".FeatureListService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />
+				
+		<receiver android:name=".FonFeatureStackProvider" 
+		    android:label="@string/featureStackFon"
+		    android:enabled="true">
 	    	<intent-filter>
 	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 	    	</intent-filter>
 	   	 	<meta-data android:name="android.appwidget.provider" android:label="Featured articles"
 	               android:resource="@xml/fon_feature_stack_info"  />
 		</receiver>
-		
-		<service android:name=".FonGeoListService"
+		<service android:name=".FonFeatureStackService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
-            android:exported="false" />
-
-		<receiver android:name=".FonGeoListProvider" android:enabled="true">
+            android:exported="false" />		
+				
+        <receiver android:name=".FonFeatureListProvider" 
+		    android:label="@string/featureListFon"
+		    android:enabled="true">
 	    	<intent-filter>
 	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 	    	</intent-filter>
 	   	 	<meta-data android:name="android.appwidget.provider" android:label="Featured articles"
-	               android:resource="@xml/fon_geo_list_info"  />
+	               android:resource="@xml/fon_feature_list_info"  />
 		</receiver>
-		
-		<service android:name=".FonFeatureStackService"
+		<service android:name=".FonFeatureListService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
-            android:exported="false" />		
+            android:exported="false" />	
+
+				
     </application>
 
 </manifest>

@@ -30,7 +30,7 @@ public class GeoViewFactory implements RemoteViewsService.RemoteViewsFactory {
     
     void createGeoList( ) {
     	mListWidgetItems = NetworkHelper.geoDataFetch(mListContext);
-    	Log.d(TAG, "end createList, size is " + mListWidgetItems.length);
+    	//Log.d(TAG, "end createList, size is " + mListWidgetItems.length);
     }
     
     public void onDestroy() {

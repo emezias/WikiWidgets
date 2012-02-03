@@ -55,7 +55,7 @@ public class BaseStackProvider extends AppWidgetProvider {
     public static void clickWidgetShowPage(Context ctx, String location) {
     	//This method executes the action for all the widgets to take when the title or picture is touched
         //Display a toast for the user to read while the page loads
-        Toast.makeText(ctx, "Loading Wikipedia", Toast.LENGTH_SHORT).show();
+        Toast.makeText(ctx, ctx.getString(R.string.load_msg), Toast.LENGTH_SHORT).show();
         //Debugging toast Toast.makeText(context, "Loading Wikipedia" + location, Toast.LENGTH_SHORT).show();
         final Intent tnt = new Intent("android.intent.action.VIEW", Uri.parse(location));
         //tnt.putExtra(URL_TAG, location);
@@ -73,18 +73,29 @@ public class BaseStackProvider extends AppWidgetProvider {
     	switch(layoutId) {
     	case R.xml.feature_stack_info:
     		return new Intent(ctx, FeatureStackService.class);
+    	case R.xml.feature_list_info:
+    		return new Intent(ctx, FeatureListService.class);
     	case R.xml.pic_stack_info:
     		return new Intent(ctx, PicStackService.class);
-    	case R.xml.fon_feature_stack_info:
-    		return new Intent(ctx, FonFeatureStackService.class);
+    	case R.xml.pic_list_info:
+    		return new Intent(ctx, PicListService.class);
     	case R.xml.geo_list_info:
     		return new Intent(ctx, GeoListService.class);
     	case R.xml.geo_stack_info:
     		return new Intent(ctx, GeoStackService.class);
+    		
     	case R.xml.fon_geo_list_info:
     		return new Intent(ctx, FonGeoListService.class);
     	case R.xml.fon_geo_stack_info:
     		return new Intent(ctx, FonGeoStackService.class);
+    	case R.xml.fon_foto_list_info:
+    		return new Intent(ctx, FonFotoListService.class);
+    	case R.xml.fon_foto_stack_info:
+    		return new Intent(ctx, FonFotoStackService.class);
+    	case R.xml.fon_feature_list_info:
+    		return new Intent(ctx, FonFeatureListService.class);
+    	case R.xml.fon_feature_stack_info:
+    		return new Intent(ctx, FonFeatureStackService.class);
     	}
     	Log.e(TAG, "error assigning layoutId, null intent");
     	return null;
@@ -97,19 +108,29 @@ public class BaseStackProvider extends AppWidgetProvider {
     	case R.xml.feature_stack_info:
     		//Log.d(TAG, "feature provider class sent");
     		return new Intent(ctx, FeatureStackProvider.class);
+    	case R.xml.feature_list_info:
+    		return new Intent(ctx, FeatureListProvider.class);
     	case R.xml.pic_stack_info:
-    		//Log.d(TAG, "pic class sent");
     		return new Intent(ctx, PicStackProvider.class);
-    	case R.xml.fon_feature_stack_info:
-    		return new Intent(ctx, FonFeatureStackProvider.class);
+    	case R.xml.pic_list_info:
+    		return new Intent(ctx, PicListProvider.class);
     	case R.xml.geo_list_info:
     		return new Intent(ctx, GeoListProvider.class);	
     	case R.xml.geo_stack_info:
     		return new Intent(ctx, GeoStackProvider.class);
-    	case R.xml.fon_geo_list_info:
+    		
+    	case R.xml.fon_geo_list_info:    		
     		return new Intent(ctx, FonGeoListProvider.class);
     	case R.xml.fon_geo_stack_info:
     		return new Intent(ctx, FonGeoStackProvider.class);
+    	case R.xml.fon_foto_list_info:
+    		return new Intent(ctx, FonFotoListProvider.class);
+    	case R.xml.fon_foto_stack_info:
+    		return new Intent(ctx, FonFotoStackProvider.class);
+    	case R.xml.fon_feature_list_info:
+    		return new Intent(ctx, FonFeatureListProvider.class);
+    	case R.xml.fon_feature_stack_info:
+    		return new Intent(ctx, FonFeatureStackProvider.class);
     	}
     	Log.e(TAG, "error assigning layoutId, null intent");
     	return null;

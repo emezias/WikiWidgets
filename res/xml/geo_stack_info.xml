@@ -4,7 +4,7 @@
     android:minHeight="460dp"
     android:updatePeriodMillis="144000"
     android:initialLayout="@layout/widget_stack"
-    android:previewImage="@drawable/brewtea"
+    android:previewImage="@drawable/geo_stack"
     /> 
     <!-- update happens every four hours, 14 400 seconds --> 
     
