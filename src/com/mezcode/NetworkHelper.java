@@ -38,8 +38,10 @@ public class NetworkHelper {
     static final  String TITLE = "title";
     static final  String ITEM = "item";
         
-    static ArrayList<PicItem> returnListFromRSS(BufferedInputStream is, ArrayList<PicItem> widgetList) {   
-    	//This method will parse the atom feed
+    static ArrayList<PicItem> returnListFromRSS(BufferedInputStream is) {   
+    	//This method will parse the atom feed from the url connection stream
+    	//results go into an ArrayList that will transformed into an array that is caches in the view factory to populate remote view objects
+    	final ArrayList<PicItem> widgetList = new ArrayList<PicItem>();
     	try {
 			XmlPullParser parser = Xml.newPullParser();
 			parser.setInput(is, null);
@@ -48,7 +50,7 @@ public class NetworkHelper {
 			PicItem currentPic = null;
 			boolean done = false;
 			String name, summary;
-			//Log.i(TAG, "into while loop " + eventType);
+			
 			while (eventType != XmlPullParser.END_DOCUMENT && !done) {
 				name = null;
 				switch (eventType){
@@ -157,17 +159,13 @@ public class NetworkHelper {
         return null;
     }
 
-    private static ArrayList<PicItem> returnGeos(InputStream iStream, ArrayList<PicItem> gList) {
+    private static ArrayList<PicItem> returnGeos(InputStream iStream) {
     	//Log.e(TAG,"convertStreamToString next");
     	/*final StringBuilder jsonStr = new StringBuilder(100);
     	jsonStr.append(iStream);*/
     	final String jsonStr = NetworkHelper.convertStreamToString(iStream);
     	//final ArrayList<WidgetItem> glist = new ArrayList<WidgetItem>();
-    	if(gList == null) {
-    		gList = new ArrayList<PicItem>();
-    	} else {
-    		gList.clear();
-    	}
+    	ArrayList<PicItem> gList = new ArrayList<PicItem>();
 		// getting data and if we don't we just get out of here!
 		JSONArray geonames = null;
 		try {
@@ -177,7 +175,7 @@ public class NetworkHelper {
 		} catch (JSONException e) {
 			Log.e(TAG, "Json exception " + e.getMessage());
 			e.printStackTrace();
-			return gList;
+			return null;
 		} 
 		PicItem add2List;
 		for (int i = 0; i < geonames.length(); i++) {
@@ -185,7 +183,6 @@ public class NetworkHelper {
 				JSONObject geonameObj = geonames.getJSONObject(i);
 				add2List = new PicItem();
 				add2List.wikipediaUrl = geonameObj.getString("wikipediaUrl");
-				//setWikipediaUrl(geonameObj.getString("wikipediaUrl"));
 				add2List.setTitle(geonameObj.getString("title"));
 				add2List.setSummary(geonameObj.getString("summary"));
 				//Log.d(TAG, "wiki url is " + add2List.getWikipediaUrl());
@@ -197,17 +194,19 @@ public class NetworkHelper {
 				// ignore exception and keep going!
 				Log.e(TAG, "JSON exception");
 				e.printStackTrace();
+				return null;
 			}
 		}
 		//Log.d(TAG, "glist size " + gList.size() + " no problem with return Geos");
 		return gList;
     }
     
-    static ArrayList<PicItem> geoDataFetch(Context ctx, ArrayList<PicItem> widgetList) {
+    static PicItem[] geoDataFetch(Context ctx) {
     	double[] gps = getGPS(ctx);
     	/*
     	 * fetch the location or not!
-    	 * TODO, cache old data, pop toast or show that gps is not available somewhere
+    	 * TODO, cache old data with a serialized pref, 
+    	 * pop toast or show that gps is not available some way
     	 * TODO refresh button
     	 */
     	final String lang;
@@ -219,18 +218,27 @@ public class NetworkHelper {
        final StringBuilder scratch = new StringBuilder(10);
        scratch.append("http://ws.geonames.net/findNearbyWikipediaJSON?formatted=true&lat=").append(gps[0])
     		.append("&lng=").append(gps[1]).append("&username=wikimedia&lang=").append(lang);
-    	widgetList = parseGeonamesPage(scratch.toString(), widgetList);
-		Log.d(TAG, scratch.toString() + " list length = " + widgetList.size());
+       final ArrayList<PicItem> tmpStructure = parseGeonamesPage(scratch.toString());
+       Log.d(TAG, scratch.toString() + " list length = " + tmpStructure.size());
         //clean up, clear stringbuilder
  	    scratch.setLength(0);
     	gps = null;
- 	    return widgetList;
+    	if(tmpStructure != null) {
+    		PicItem[] widgetList = new PicItem[tmpStructure.size()];
+    		widgetList = tmpStructure.toArray(widgetList);
+        	Log.d(TAG, "array length = " + widgetList.length);
+        	tmpStructure.clear();
+     	    return widgetList;
+    	} 
+    	return new PicItem[0];
+    	
     }
     
-    static ArrayList<PicItem> parseGeonamesPage(String urlstring, ArrayList<PicItem> widgetSvcCollection) {
+    static ArrayList<PicItem> parseGeonamesPage(String urlstring) {
     	//given a URL, fetch the web page and then process the buffered input stream into a scrolling widget collection
     	HttpURLConnection urlConnection = null;
     	Log.d(TAG, "parse page");
+    	ArrayList<PicItem> widgetSvcCollection = null;
      	try {
      		final URL url = new URL(urlstring);
  	    	urlConnection = (HttpURLConnection) url.openConnection();
@@ -238,7 +246,7 @@ public class NetworkHelper {
  	    	//Log.d(TAG, "server response code: " +  rcode);
 			if ((rcode >= 200) && (rcode < 300)) {
 				InputStream is = urlConnection.getInputStream(); 
-				widgetSvcCollection = returnGeos(is, widgetSvcCollection);
+			    widgetSvcCollection = returnGeos(is);
 				//Log.d(TAG, "return geos got list, num of items is " + widgetSvcCollection.size());					
 			} else {
 				Log.e(TAG, "server responded with error code: " +  rcode);
@@ -294,11 +302,10 @@ public class NetworkHelper {
 					int end = sb.indexOf(" width=");
 					if(end > 0) {
 						hasImage = true;
-						Log.d(TAG, "end index " + end);
+						//Log.d(TAG, "end index " + end);
 						sb = new StringBuilder(sb.substring(start, end-8));
-						
 						sb.insert(0, "http://");
-						Log.d(TAG, sb.toString());
+						//Log.d(TAG, sb.toString());
 					} //end, final string index										
 				} //end if, src tag present but no jpg
 			} else {
@@ -319,7 +326,7 @@ public class NetworkHelper {
     	return null;
     }
     
-    static ArrayList<PicItem> fetchRssFeed(URL url, ArrayList<PicItem> widgetSvcCollection) {
+    static PicItem[] fetchRssFeed(URL url) {
     	//given a URL, fetch the web page and then process the buffered input stream into a scrolling widget collection
     	HttpURLConnection urlConnection = null;
     	
@@ -330,13 +337,11 @@ public class NetworkHelper {
  	    	//Log.d(TAG, "server response code: " +  rcode);
 			if ((rcode >= 200) && (rcode < 300)) {
 				BufferedInputStream is = new BufferedInputStream(urlConnection.getInputStream()); 
-				if(widgetSvcCollection == null) {
-					widgetSvcCollection = new ArrayList<PicItem>();
-				} else {
-					widgetSvcCollection.clear();
-				}
-				widgetSvcCollection = returnListFromRSS(is, widgetSvcCollection);
-				return widgetSvcCollection;
+				final ArrayList<PicItem> widgetSvcCollection = returnListFromRSS(is);
+				PicItem[] list = new PicItem[widgetSvcCollection.size()];
+				list = widgetSvcCollection.toArray(list);
+				widgetSvcCollection.clear();
+				return list;
 			} else {
 				Log.e(TAG, "server responded with error code: " +  rcode);
 				return null;

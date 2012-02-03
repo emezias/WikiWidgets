@@ -12,15 +12,18 @@ public final class R {
     }
     public static final class drawable {
         public static final int arrow=0x7f020000;
-        public static final int icon=0x7f020001;
-        public static final int list_widget_preview=0x7f020002;
-        public static final int locate=0x7f020003;
-        public static final int pic_item_background2=0x7f020004;
-        public static final int pin=0x7f020005;
-        public static final int search=0x7f020006;
-        public static final int stackpreview=0x7f020007;
-        public static final int widget_item_background=0x7f020008;
-        public static final int widget_item_background2=0x7f020009;
+        public static final int brewtea=0x7f020001;
+        public static final int button1=0x7f020002;
+        public static final int icon=0x7f020003;
+        public static final int list_widget_preview=0x7f020004;
+        public static final int locate=0x7f020005;
+        public static final int pic_item_background2=0x7f020006;
+        public static final int pin=0x7f020007;
+        public static final int search=0x7f020008;
+        public static final int stackpreview=0x7f020009;
+        public static final int teaatwork=0x7f02000a;
+        public static final int widget_item_background=0x7f02000b;
+        public static final int widget_item_background2=0x7f02000c;
     }
     public static final class id {
         public static final int empty_list_view=0x7f07000d;
@@ -67,9 +70,12 @@ public final class R {
     public static final class xml {
         public static final int feature_stack_info=0x7f040000;
         public static final int fon_feature_stack_info=0x7f040001;
-        public static final int fon_pic_widget_info=0x7f040002;
-        public static final int geo_list_info=0x7f040003;
-        public static final int pic_stack_info=0x7f040004;
-        public static final int searchable=0x7f040005;
+        public static final int fon_geo_list_info=0x7f040002;
+        public static final int fon_geo_stack_info=0x7f040003;
+        public static final int fon_pic_widget_info=0x7f040004;
+        public static final int geo_list_info=0x7f040005;
+        public static final int geo_stack_info=0x7f040006;
+        public static final int pic_stack_info=0x7f040007;
+        public static final int searchable=0x7f040008;
     }
 }

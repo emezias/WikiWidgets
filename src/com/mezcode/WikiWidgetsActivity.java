@@ -29,7 +29,7 @@ public class WikiWidgetsActivity extends Activity {
 		// Get the URL from the widget and load it
 		super.onResume();
 	    //final Bundle b = getIntent().getExtras();
-	    String location = getIntent().getStringExtra(WikiWidgetProvider.URL_TAG);
+	    String location = getIntent().getStringExtra(BaseStackProvider.URL_TAG);
 	    if(location != null) {
 	    	Log.d(TAG, "first try " + location);
 	    } else {

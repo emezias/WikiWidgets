@@ -48,6 +48,30 @@
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
 		
+		<receiver android:name=".GeoStackProvider" android:enabled="true">
+	    	<intent-filter>
+	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+	    	</intent-filter>
+	   	 	<meta-data android:name="android.appwidget.provider" android:label="Stack of nearby articles"
+	               android:resource="@xml/geo_stack_info"  />
+		</receiver>
+		
+		<service android:name=".GeoStackService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />
+
+		<receiver android:name=".FonGeoStackProvider" android:enabled="true">
+	    	<intent-filter>
+	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+	    	</intent-filter>
+	   	 	<meta-data android:name="android.appwidget.provider" android:label="Stack of nearby articles"
+	               android:resource="@xml/fon_geo_stack_info"  />
+		</receiver>
+		
+		<service android:name=".FonGeoStackService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />
+				
 		<receiver android:name=".PicStackProvider" android:enabled="true">
 	    	<intent-filter>
 	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -80,10 +104,21 @@
 	               android:resource="@xml/fon_feature_stack_info"  />
 		</receiver>
 		
-		<service android:name=".FonFeatureStackService"
+		<service android:name=".FonGeoListService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
+
+		<receiver android:name=".FonGeoListProvider" android:enabled="true">
+	    	<intent-filter>
+	        	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+	    	</intent-filter>
+	   	 	<meta-data android:name="android.appwidget.provider" android:label="Featured articles"
+	               android:resource="@xml/fon_geo_list_info"  />
+		</receiver>
 		
+		<service android:name=".FonFeatureStackService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />		
     </application>
 
 </manifest>

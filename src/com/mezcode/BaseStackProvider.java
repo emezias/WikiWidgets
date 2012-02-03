@@ -78,7 +78,13 @@ public class BaseStackProvider extends AppWidgetProvider {
     	case R.xml.fon_feature_stack_info:
     		return new Intent(ctx, FonFeatureStackService.class);
     	case R.xml.geo_list_info:
-    		return new Intent(ctx, GeoListService.class);	
+    		return new Intent(ctx, GeoListService.class);
+    	case R.xml.geo_stack_info:
+    		return new Intent(ctx, GeoStackService.class);
+    	case R.xml.fon_geo_list_info:
+    		return new Intent(ctx, FonGeoListService.class);
+    	case R.xml.fon_geo_stack_info:
+    		return new Intent(ctx, FonGeoStackService.class);
     	}
     	Log.e(TAG, "error assigning layoutId, null intent");
     	return null;
@@ -98,12 +104,27 @@ public class BaseStackProvider extends AppWidgetProvider {
     		return new Intent(ctx, FonFeatureStackProvider.class);
     	case R.xml.geo_list_info:
     		return new Intent(ctx, GeoListProvider.class);	
+    	case R.xml.geo_stack_info:
+    		return new Intent(ctx, GeoStackProvider.class);
+    	case R.xml.fon_geo_list_info:
+    		return new Intent(ctx, FonGeoListProvider.class);
+    	case R.xml.fon_geo_stack_info:
+    		return new Intent(ctx, FonGeoStackProvider.class);
     	}
     	Log.e(TAG, "error assigning layoutId, null intent");
     	return null;
     }
     
     public static void provideRemoteViews(Context ctx, int widgetID, int layoutID, AppWidgetManager mgr, boolean stack) {
+        // Set the action to run when the user touches a particular view 
+        final Intent toastIntent = switchPendingIntentTemplateOnId(ctx, layoutID); 
+    	toastIntent.setAction(CLICK);
+        toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
+        toastIntent.setData(Uri.parse(toastIntent.toUri(Intent.URI_INTENT_SCHEME)));
+        PendingIntent toastPendingIntent = PendingIntent.getBroadcast(ctx, 0, toastIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT);
+        //pending intent template ready!  
+        
         final Intent intent = switchSvcClassOnId(ctx, layoutID);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
@@ -112,20 +133,15 @@ public class BaseStackProvider extends AppWidgetProvider {
         	rv = new RemoteViews("com.mezcode", R.layout.widget_stack);
         	rv.setRemoteAdapter(widgetID, R.id.stack_view, intent);
         	rv.setEmptyView(R.id.stack_view, R.id.empty_view);
+        	rv.setPendingIntentTemplate(R.id.stack_view, toastPendingIntent);
         } else {
         	rv = new RemoteViews("com.mezcode", R.layout.widget_list);
         	rv.setRemoteAdapter(widgetID, R.id.list_view, intent);
         	rv.setEmptyView(R.id.list_view, R.id.empty_list_view);
+        	rv.setPendingIntentTemplate(R.id.list_view, toastPendingIntent);
         }        
-
-        final Intent toastIntent = switchPendingIntentTemplateOnId(ctx, layoutID); //new Intent(context, FeedProvider.class); //
-        // Set the action to run when the user touches a particular view 
-        toastIntent.setAction(CLICK);
-        toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
-        toastIntent.setData(Uri.parse(toastIntent.toUri(Intent.URI_INTENT_SCHEME)));
-        PendingIntent toastPendingIntent = PendingIntent.getBroadcast(ctx, 0, toastIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT);
-        rv.setPendingIntentTemplate(R.id.stack_view, toastPendingIntent);
+        
+        //pending intent seems restricted 
         /*final Intent betterIntent = new Intent(context, PicWidgetProvider.class);
         // Set the action to run when the user touches a particular view 
         final Intent tnt = new Intent("android.intent.action.VIEW");

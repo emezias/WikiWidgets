@@ -6,10 +6,11 @@ import android.widget.RemoteViewsService;
 
 public class GeoListService extends RemoteViewsService {
 	private static final String TAG = "GeoListService";
-    @Override
+
+	@Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
     	Log.d(TAG,"create GeoListFactory");
-        return new GeoListViewFactory(this.getApplicationContext(), intent, R.xml.geo_list_info);
+        return new GeoViewFactory(this.getApplicationContext(), intent, R.xml.geo_list_info);
     }
 
 }

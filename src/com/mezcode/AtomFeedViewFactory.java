@@ -2,7 +2,6 @@ package com.mezcode;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +11,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactory {
-    private ArrayList<PicItem> mFeedWidgetItems;
+    private PicItem[] mFeedWidgetItems;
     private int mWidgetType;
     private static String mPkg;
     //private static Context mContext;
@@ -49,7 +48,7 @@ public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactor
 			case R.xml.pic_stack_info:
 				webpage = new URL(NetworkHelper.POTD_STREAM);
 			}
-			mFeedWidgetItems = NetworkHelper.fetchRssFeed(webpage, mFeedWidgetItems);
+			mFeedWidgetItems = NetworkHelper.fetchRssFeed(webpage);
 		} catch (MalformedURLException e) {
 			Log.e(TAG, "createList exception " + e.getMessage());
 			e.printStackTrace();
@@ -60,23 +59,26 @@ public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactor
     public void onDestroy() {
         // In onDestroy() you should tear down anything that was setup for your data source,
         // eg. cursors, connections, etc.
-        mFeedWidgetItems.clear();
+        mFeedWidgetItems = null;
     }
 
     public int getCount() {
     	//Log.d(TAG, "getCount");
     	if(mFeedWidgetItems != null) {
-    		return mFeedWidgetItems.size();
+    		return mFeedWidgetItems.length;
     	} else return 0;
     }
     
-    private int fetchId(int position) {
-		switch(mWidgetType) {
+    public static int fetchId(int position, int viewID) {
+		switch(viewID) {
 		case R.xml.feature_stack_info:
+		case R.xml.geo_stack_info:
     		return (position % 2 == 0 ? R.layout.feature_widget_item
                     : R.layout.feature_widget_item2);
 		case R.xml.fon_feature_stack_info:
+		case R.xml.fon_geo_stack_info:
 		case R.xml.pic_stack_info:
+		case R.xml.geo_list_info:
     		return (position % 2 == 0 ? R.layout.pic_widget_item
                     : R.layout.pic_widget_item2);
     	}
@@ -90,14 +92,15 @@ public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactor
     	//Log.d(TAG, "getViewAt " + position);
         // Construct a remote views item based on our widget item xml file 
         // set the title and summary text based on the position.
-    	final int itemId = fetchId(position);
+    	final int itemId = fetchId(position, mWidgetType);
         final RemoteViews rv = new RemoteViews(mPkg, itemId);
-        rv.setTextViewText(R.id.widget_item, mFeedWidgetItems.get(position).title);
-        rv.setTextViewText(R.id.widget_summary, mFeedWidgetItems.get(position).summary);
+        final PicItem displayItem = mFeedWidgetItems[position];
+        rv.setTextViewText(R.id.widget_item, displayItem.title);
+        rv.setTextViewText(R.id.widget_summary, displayItem.summary);
         /*************/
         
-        if(mFeedWidgetItems.get(position).photo != null) {
-        	rv.setImageViewBitmap(R.id.widget_pic, mFeedWidgetItems.get(position).photo);
+        if(displayItem.photo != null) {
+        	rv.setImageViewBitmap(R.id.widget_pic, displayItem.photo);
         } else {
         	rv.setImageViewResource(R.id.widget_pic, R.drawable.icon);
         }
@@ -105,7 +108,7 @@ public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactor
         // Next, we set a fill-intent which to fill-in the pending intent template
         // set on the collection view in WikiWidgetProvider.
         final Bundle extras = new Bundle();
-        extras.putString(WikiWidgetProvider.URL_TAG, mFeedWidgetItems.get(position).wikipediaUrl);
+        extras.putString(BaseStackProvider.URL_TAG, displayItem.wikipediaUrl);
         //Log.d(TAG, "set url as extra " + mListWidgetItems.get(position).wikipediaUrl);
         final Intent fillInIntent = new Intent(); 
         fillInIntent.putExtras(extras);
@@ -127,7 +130,7 @@ public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactor
     }
 
     public int getViewTypeCount() {
-        return 1;
+        return 2;
     }
 
     public long getItemId(int position) {

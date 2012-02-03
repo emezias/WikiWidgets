@@ -8,9 +8,6 @@ import android.util.Log;
 
 public class BaseListProvider extends AppWidgetProvider {
 	private static final String TAG = "BaseListProvider";
-	public static final String CLICK = "Click";
-    public static final String URL_TAG = "Url";
-    public static final String REFRESH = "Refresh";
 
     int mListLayoutId = R.xml.geo_list_info;
 
@@ -34,10 +31,9 @@ public class BaseListProvider extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         //Broadcast receiver, code will execute when a title of the item in the collection is touched
     	final String action = intent.getAction();
-    	//Log.d(TAG, "list provider receive " + action);
-        if (action.equals(CLICK)) {
-        	Log.d(TAG, intent.getStringExtra(URL_TAG));
-            BaseStackProvider.clickWidgetShowPage(context, intent.getStringExtra(URL_TAG));
+        if (action.equals(BaseStackProvider.CLICK)) {
+        	Log.d(TAG, "base list provider receive " + intent.getStringExtra(BaseStackProvider.URL_TAG));
+            BaseStackProvider.clickWidgetShowPage(context, intent.getStringExtra(BaseStackProvider.URL_TAG));
             //Display a toast and display the page
         }
         super.onReceive(context, intent);
@@ -48,7 +44,7 @@ public class BaseListProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // update each of the widgets with the remote adapter
-    	Log.d(TAG, "geo widget provider update");
+    	Log.d(TAG, "list provider update");
         for (int i = 0; i < appWidgetIds.length; ++i) {
             // Here we setup the intent which points to the WikiWidgetService which will
             // provide the views for this collection.
