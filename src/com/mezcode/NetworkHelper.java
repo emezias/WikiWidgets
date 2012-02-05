@@ -219,14 +219,14 @@ public class NetworkHelper {
        scratch.append("http://ws.geonames.net/findNearbyWikipediaJSON?formatted=true&lat=").append(gps[0])
     		.append("&lng=").append(gps[1]).append("&username=wikimedia&lang=").append(lang);
        final ArrayList<PicItem> tmpStructure = parseGeonamesPage(scratch.toString());
-       Log.d(TAG, scratch.toString() + " list length = " + tmpStructure.size());
+       //Log.d(TAG, scratch.toString() + " list length = " + tmpStructure.size());
         //clean up, clear stringbuilder
  	    scratch.setLength(0);
     	gps = null;
     	if(tmpStructure != null) {
     		PicItem[] widgetList = new PicItem[tmpStructure.size()];
     		widgetList = tmpStructure.toArray(widgetList);
-        	Log.d(TAG, "array length = " + widgetList.length);
+        	//Log.d(TAG, "array length = " + widgetList.length);
         	tmpStructure.clear();
      	    return widgetList;
     	} 
@@ -237,7 +237,7 @@ public class NetworkHelper {
     static ArrayList<PicItem> parseGeonamesPage(String urlstring) {
     	//given a URL, fetch the web page and then process the buffered input stream into a scrolling widget collection
     	HttpURLConnection urlConnection = null;
-    	Log.d(TAG, "parse page");
+    	//Log.d(TAG, "parse page");
     	ArrayList<PicItem> widgetSvcCollection = null;
      	try {
      		final URL url = new URL(urlstring);

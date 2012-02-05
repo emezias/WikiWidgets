@@ -3,10 +3,9 @@ package com.mezcode;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 public class FonGeoListProvider extends BaseListProvider {
-	private static final String TAG = "GeoListProvider";
+	//private static final String TAG = "GeoListProvider";
 	public static final String CLICK = "Click";
     public static final String URL_TAG = "Url";
 
@@ -32,14 +31,14 @@ public class FonGeoListProvider extends BaseListProvider {
         //Broadcast receiver, code will execute when a title of the item in the collection is touched
         mListLayoutId = R.xml.fon_geo_list_info;
         super.onReceive(context, intent);
-    	Log.d(TAG, "FonGeoListProvider onReceive");
+    	//Log.d(TAG, "FonGeoListProvider onReceive");
 
     } 
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // update each of the widgets with the remote adapter
-    	Log.d(TAG, "FonGeoListProvider update");
+    	//Log.d(TAG, "FonGeoListProvider update");
         mListLayoutId = R.xml.fon_geo_list_info;
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }

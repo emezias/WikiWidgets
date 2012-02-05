@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 public class FonFotoListProvider extends BaseListProvider {
-	//private static final String TAG = "FeatureWidgetProvider";
+	//private static final String TAG = "FonFotoListProvider";
 	//This class sets an instance variable used by the FeedProvider to determine the widget type
     
     @Override
@@ -21,7 +21,7 @@ public class FonFotoListProvider extends BaseListProvider {
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-        mListLayoutId = R.xml.fon_feature_stack_info;
+        mListLayoutId = R.xml.fon_foto_list_info;
         //This method is run once per widget instance, when the widget is first created
     }
 
@@ -29,14 +29,15 @@ public class FonFotoListProvider extends BaseListProvider {
     public void onReceive(Context context, Intent intent) {
         //Broadcast receiver, code will execute when a title of the item in the collection is touched
         super.onReceive(context, intent);
-        mListLayoutId = R.xml.fon_feature_stack_info;
-        //Log.d(TAG, "feature onReceive");
+        mListLayoutId = R.xml.fon_foto_list_info;
+        //Log.d(TAG, "foto onReceive");
     }
      
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // update each of the widgets with the remote adapter
-        mListLayoutId = R.xml.fon_feature_stack_info;
+        mListLayoutId = R.xml.fon_foto_list_info;
+        //Log.d(TAG, "foto update");
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 }

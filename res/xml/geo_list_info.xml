@@ -4,6 +4,6 @@
     android:minWidth="390dp"
     android:minHeight="460dp"
     android:updatePeriodMillis="14000"
-    android:initialLayout="@layout/widget_list"
+    android:initialLayout="@layout/geo_list_layout"
     android:previewImage="@drawable/geo_list"
     /> 

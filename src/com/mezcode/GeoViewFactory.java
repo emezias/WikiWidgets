@@ -104,7 +104,7 @@ public class GeoViewFactory implements RemoteViewsService.RemoteViewsFactory {
 
     public void onDataSetChanged() {
         // For use with a content provider?  Run after 
-    	//Log.d(TAG, "onDataSetChanged");
+    	Log.d(TAG, "onDataSetChanged");
     	createGeoList();
     }
 }

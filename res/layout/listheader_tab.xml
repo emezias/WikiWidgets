@@ -1,0 +1,22 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="0dip" android:layout_weight="1"
+    android:background="@android:color/transparent">
+    <ImageView
+		android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/wiki_list_head" />
+    <TextView android:id="@+id/list_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="#ffffff"
+        android:background="@drawable/list_txt_bg"
+        android:textStyle="bold"
+        android:text="@string/list_msg"
+        android:textSize="25sp" 
+        android:padding="10dp" />
+    </FrameLayout>	    
+</merge>

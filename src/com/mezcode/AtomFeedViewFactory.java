@@ -51,6 +51,7 @@ public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactor
 			case R.xml.pic_list_info:
 			case R.xml.fon_foto_stack_info:
 			case R.xml.fon_foto_list_info:
+				Log.d(TAG, "fetch photo stream");
 				webpage = new URL(NetworkHelper.POTD_STREAM);
 			}
 			mFeedWidgetItems = NetworkHelper.fetchRssFeed(webpage);

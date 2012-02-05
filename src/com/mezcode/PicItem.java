@@ -5,7 +5,7 @@ import android.text.Html;
 
 public class PicItem {
 
-	private static final String TAG = "PicItem";
+	//private static final String TAG = "PicItem";
 	String wikipediaUrl;
 	String title;
 	String summary;

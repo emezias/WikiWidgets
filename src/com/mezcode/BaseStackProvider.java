@@ -20,7 +20,7 @@ public class BaseStackProvider extends AppWidgetProvider {
 	private static final String TAG = "FeedProvider";
 	public static final String CLICK = "Click";
     public static final String URL_TAG = "Url";
-    //TODO public static final String REFRESH = "Refresh";
+    
     
     int mLayoutId = R.xml.feature_stack_info;
 
@@ -89,6 +89,7 @@ public class BaseStackProvider extends AppWidgetProvider {
     	case R.xml.fon_geo_stack_info:
     		return new Intent(ctx, FonGeoStackService.class);
     	case R.xml.fon_foto_list_info:
+    		//Log.d(TAG, "base stack setting service");
     		return new Intent(ctx, FonFotoListService.class);
     	case R.xml.fon_foto_stack_info:
     		return new Intent(ctx, FonFotoStackService.class);
@@ -104,49 +105,53 @@ public class BaseStackProvider extends AppWidgetProvider {
     public static Intent switchPendingIntentTemplateOnId(Context ctx, int layoutId) {
     	//This method is shared by the 2 base classes
     	//It identifies the provider class that will go into a pending intent template and execute on receive 
+    	Intent returnIt = null;
     	switch(layoutId) {
     	case R.xml.feature_stack_info:
-    		//Log.d(TAG, "feature provider class sent");
-    		return new Intent(ctx, FeatureStackProvider.class);
+    		returnIt =  new Intent(ctx, FeatureStackProvider.class);
     	case R.xml.feature_list_info:
-    		return new Intent(ctx, FeatureListProvider.class);
+    		returnIt =  new Intent(ctx, FeatureListProvider.class);
     	case R.xml.pic_stack_info:
-    		return new Intent(ctx, PicStackProvider.class);
+    		returnIt =  new Intent(ctx, PicStackProvider.class);
     	case R.xml.pic_list_info:
-    		return new Intent(ctx, PicListProvider.class);
+    		returnIt =  new Intent(ctx, PicListProvider.class);
     	case R.xml.geo_list_info:
-    		return new Intent(ctx, GeoListProvider.class);	
+    		returnIt =  new Intent(ctx, GeoListProvider.class);	
     	case R.xml.geo_stack_info:
-    		return new Intent(ctx, GeoStackProvider.class);
+    		returnIt =  new Intent(ctx, GeoStackProvider.class);
     		
     	case R.xml.fon_geo_list_info:    		
-    		return new Intent(ctx, FonGeoListProvider.class);
+    		returnIt =  new Intent(ctx, FonGeoListProvider.class);
     	case R.xml.fon_geo_stack_info:
-    		return new Intent(ctx, FonGeoStackProvider.class);
+    		returnIt =  new Intent(ctx, FonGeoStackProvider.class);
     	case R.xml.fon_foto_list_info:
-    		return new Intent(ctx, FonFotoListProvider.class);
+    		//Log.d(TAG, "provider class set");
+    		returnIt =  new Intent(ctx, FonFotoListProvider.class);
     	case R.xml.fon_foto_stack_info:
-    		return new Intent(ctx, FonFotoStackProvider.class);
+    		returnIt =  new Intent(ctx, FonFotoStackProvider.class);
     	case R.xml.fon_feature_list_info:
-    		return new Intent(ctx, FonFeatureListProvider.class);
+    		returnIt =  new Intent(ctx, FonFeatureListProvider.class);
     	case R.xml.fon_feature_stack_info:
-    		return new Intent(ctx, FonFeatureStackProvider.class);
+    		returnIt = new Intent(ctx, FonFeatureStackProvider.class);
     	}
-    	Log.e(TAG, "error assigning layoutId, null intent");
-    	return null;
+    	
+    	if(returnIt != null) {
+        	returnIt.setAction(CLICK);
+            returnIt.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, layoutId);
+            returnIt.setData(Uri.parse(returnIt.toUri(Intent.URI_INTENT_SCHEME)));
+    	} else Log.e(TAG, "error assigning layoutId, null intent");
+    	return returnIt;
     }
     
     public static void provideRemoteViews(Context ctx, int widgetID, int layoutID, AppWidgetManager mgr, boolean stack) {
         // Set the action to run when the user touches a particular view 
-        final Intent toastIntent = switchPendingIntentTemplateOnId(ctx, layoutID); 
-    	toastIntent.setAction(CLICK);
-        toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
-        toastIntent.setData(Uri.parse(toastIntent.toUri(Intent.URI_INTENT_SCHEME)));
-        PendingIntent toastPendingIntent = PendingIntent.getBroadcast(ctx, 0, toastIntent,
+        final Intent providerIntent = switchPendingIntentTemplateOnId(ctx, layoutID); 
+        PendingIntent pIntent = PendingIntent.getBroadcast(ctx, 0, providerIntent,
             PendingIntent.FLAG_UPDATE_CURRENT);
         //pending intent template ready!  
         
         final Intent intent = switchSvcClassOnId(ctx, layoutID);
+        //TODO, tighten this up and add the next two lines to the switchSvcClassOnId method
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
         final RemoteViews rv;
@@ -154,12 +159,24 @@ public class BaseStackProvider extends AppWidgetProvider {
         	rv = new RemoteViews("com.mezcode", R.layout.widget_stack);
         	rv.setRemoteAdapter(widgetID, R.id.stack_view, intent);
         	rv.setEmptyView(R.id.stack_view, R.id.empty_view);
-        	rv.setPendingIntentTemplate(R.id.stack_view, toastPendingIntent);
+        	rv.setPendingIntentTemplate(R.id.stack_view, pIntent);
         } else {
+        	//Log.d(TAG, "provideRemoteViews happening");
         	rv = new RemoteViews("com.mezcode", R.layout.widget_list);
         	rv.setRemoteAdapter(widgetID, R.id.list_view, intent);
         	rv.setEmptyView(R.id.list_view, R.id.empty_list_view);
-        	rv.setPendingIntentTemplate(R.id.list_view, toastPendingIntent);
+        	rv.setPendingIntentTemplate(R.id.list_view, pIntent);
+        	switch(layoutID) {
+        	case R.xml.feature_list_info:
+        	case R.xml.fon_feature_list_info:
+        		rv.setTextViewText(R.id.list_title, ctx.getString(R.string.featureListTitle));
+        		break;
+        	case R.xml.fon_foto_list_info:
+        	case R.xml.pic_list_info:
+        		Log.d(TAG, "set pic title");
+        		rv.setTextViewText(R.id.list_title, ctx.getString(R.string.photoListTitle));
+        		break;
+        	}
         }        
         
         //pending intent seems restricted 
@@ -173,7 +190,6 @@ public class BaseStackProvider extends AppWidgetProvider {
         rv.setPendingIntentTemplate(R.id.stack_view, toastPendingIntent);*/
         
         mgr.updateAppWidget(widgetID, rv);
-        
     }
     
     @Override

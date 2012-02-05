@@ -4,10 +4,9 @@
     <string name="toast_msg">Loading Wikipedia</string>
     <string name="app_name">WikiWidgets</string>
     <string name="search_hint">Current location</string>
-    <string name="empty_view_text">This is the empty view</string>
+    <string name="empty_view_text">No Data.\nDo you have an internet connection?</string>
     <string name="load_msg">Loading Wikipedia</string>
     <string name="list_msg">Scroll through</string>
-    
     <string name="geoListTablet">Wild WikiWidgets \nLarge List of Nearby Wiki pages</string>
     <string name="geoListFon">Wild WikiWidgets \nSmall List of Nearby pages</string>
     <string name="geoStackTablet">Wild WikiWidgets \nLarge Stack, Nearby Wiki pages</string>
@@ -20,4 +19,10 @@
     <string name="featureListFon">Wild WikiWidgets \nSmall List of Feature pages</string>
     <string name="featureStackTablet">Wild WikiWidgets \nLarge Stack, Feature Wiki pages</string>
     <string name="featureStackFon">Wild WikiWidgets \nSmall Stack of Feature pages</string>
+    
+    <string name="featureListTitle">Featured Articles</string>
+    <string name="photoListTitle">Photo of the Day</string>
+    <string name="geoListTitle">Update Location</string>
+   
+    <string name="geoButtonHelp">Update the location data</string>
 </resources>
