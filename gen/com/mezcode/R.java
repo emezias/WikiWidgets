@@ -27,18 +27,19 @@ public final class R {
         public static final int geo_list=0x7f02000d;
         public static final int geo_stack=0x7f02000e;
         public static final int geostack=0x7f02000f;
-        public static final int icon=0x7f020010;
-        public static final int list_txt_bg=0x7f020011;
-        public static final int list_widget_preview=0x7f020012;
-        public static final int locate=0x7f020013;
-        public static final int pic_item_background2=0x7f020014;
-        public static final int pin=0x7f020015;
-        public static final int refresh_btn=0x7f020016;
-        public static final int search=0x7f020017;
-        public static final int stackpreview=0x7f020018;
-        public static final int widget_item_background=0x7f020019;
-        public static final int widget_item_background2=0x7f02001a;
-        public static final int wiki_list_head=0x7f02001b;
+        public static final int ic_menu_feature=0x7f020010;
+        public static final int icon=0x7f020011;
+        public static final int list_txt_bg=0x7f020012;
+        public static final int list_widget_preview=0x7f020013;
+        public static final int locate=0x7f020014;
+        public static final int pic_item_background2=0x7f020015;
+        public static final int pin=0x7f020016;
+        public static final int refresh_btn=0x7f020017;
+        public static final int search=0x7f020018;
+        public static final int stackpreview=0x7f020019;
+        public static final int widget_item_background=0x7f02001a;
+        public static final int widget_item_background2=0x7f02001b;
+        public static final int wiki_list_head=0x7f02001c;
     }
     public static final class id {
         public static final int empty_list_view=0x7f070007;
@@ -51,7 +52,9 @@ public final class R {
         public static final int list_view=0x7f070006;
         public static final int map_main=0x7f07000b;
         public static final int mapview=0x7f07000c;
-        public static final int my_location=0x7f070011;
+        public static final int menu_feature=0x7f070013;
+        public static final int menu_location=0x7f070011;
+        public static final int menu_photo=0x7f070012;
         public static final int my_webview=0x7f07000e;
         public static final int redo=0x7f07000d;
         public static final int stack_view=0x7f07000f;
@@ -86,6 +89,7 @@ public final class R {
         public static final int featureListFon=0x7f050010;
         public static final int featureListTablet=0x7f05000f;
         public static final int featureListTitle=0x7f050013;
+        public static final int featureMenu=0x7f050019;
         public static final int featureStackFon=0x7f050012;
         public static final int featureStackTablet=0x7f050011;
         public static final int geoButtonHelp=0x7f050016;
@@ -97,9 +101,11 @@ public final class R {
         public static final int hello=0x7f050000;
         public static final int list_msg=0x7f050006;
         public static final int load_msg=0x7f050005;
+        public static final int locMenu=0x7f050017;
         public static final int photoListFon=0x7f05000c;
         public static final int photoListTablet=0x7f05000b;
         public static final int photoListTitle=0x7f050014;
+        public static final int photoMenu=0x7f050018;
         public static final int photoStackFon=0x7f05000e;
         public static final int photoStackTablet=0x7f05000d;
         public static final int search_hint=0x7f050003;

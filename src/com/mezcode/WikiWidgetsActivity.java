@@ -2,8 +2,10 @@ package com.mezcode;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.webkit.WebView;
 
 public class WikiWidgetsActivity extends Activity {
@@ -21,7 +23,6 @@ public class WikiWidgetsActivity extends Activity {
 	    //cache the WebView instead of doing a lookup for each call
 	    mWebView = (WebView) findViewById(R.id.my_webview);
 	    if(mWebView != null) mWebView.getSettings().setJavaScriptEnabled(true);
-	    
 	}
 
 	@Override
@@ -37,7 +38,6 @@ public class WikiWidgetsActivity extends Activity {
 	    	location = "http://m.wikipedia.org/";
 	    }
 	    
-	    
 	    if(mWebView != null) {
 	    	Log.d(TAG, "loading now " + location);
 	    	mWebView.loadUrl(location);
@@ -45,6 +45,7 @@ public class WikiWidgetsActivity extends Activity {
 	    } else {
 	    	Log.d(TAG, "webview is null");
 	    }
+	    //Log.d(TAG, returnDateForUrl(true));
     	
 	}
 	
@@ -53,5 +54,38 @@ public class WikiWidgetsActivity extends Activity {
 	    getMenuInflater().inflate(R.menu.nearme_menu, menu);
 	    return super.onCreateOptionsMenu(menu);
 	}
+	
+	String returnDateForUrl(boolean photo) {
+		final Time t = new Time(); t.setToNow();
+		final StringBuilder sb = new StringBuilder("http://en.m.wikipedia.org/wiki/");
+		if(photo) {
+			sb.append("Template:POTD/").append(t.format("%Y-%m-%d"));
+		} else {
+			sb.append("Wikipedia:Today%27s_featured_article/").append(t.format("%B_")).append(t.monthDay).append("%2C_").append(t.format("%Y"));
+		}
+		return sb.toString();
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Three menu items for each data type
+		switch(item.getItemId()) {
+		case R.id.menu_feature:
+			//http://en.m.wikipedia.org/wiki/Wikipedia:Today%27s_featured_article/February_5%2C_2012
+			mWebView.loadUrl(returnDateForUrl(false));
+		    mWebView.invalidate();
+			break;
+		case R.id.menu_location:
+			break;
+		case R.id.menu_photo:
+			//http://en.m.wikipedia.org/wiki/Template:POTD/2012-02-06
+			mWebView.loadUrl(returnDateForUrl(true));
+		    mWebView.invalidate();			
+			break;
+		}
+		return super.onContextItemSelected(item);
+	}
+	
+	
 
 }
