@@ -19,11 +19,16 @@ public class PicItem {
 	private int index;
 	public void setWikipediaUrl(String wikipediaUrl) {
 		//Log.d(TAG, "link item is " + wikipediaUrl);
-		sb.append(wikipediaUrl);
-		index = sb.indexOf("http");
-		if(index > 0) {
-			sb.delete(0, index);
+		if(!wikipediaUrl.contains("http://")) {
+			sb.append("http://").append(wikipediaUrl);
+		} else {
+			sb.append(wikipediaUrl);
+			index = sb.indexOf("http");
+			if(index > 0) {
+				sb.delete(0, index);
+			}
 		}
+		
 		index = sb.indexOf(".m.");
 		if(index == -1) {
 			index = sb.indexOf(".");

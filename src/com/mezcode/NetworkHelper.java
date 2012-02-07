@@ -123,10 +123,10 @@ public class NetworkHelper {
     static Bitmap downloadBitmap(String urlstring) {
     	//Log.d(TAG, "download bitmap");
     	HttpURLConnection urlConnection = null;
- 	    InputStream mapStream;
  	   //Log.d(TAG, "download bitmap started");
  	    if(urlstring == null || urlstring.equals("")) return null;
  	   //Log.d(TAG, "bitmap url is " + urlstring);
+ 	    InputStream mapStream;
         try {
         	final URL url = new URL(urlstring);
         	urlConnection = (HttpURLConnection) url.openConnection();
@@ -159,14 +159,13 @@ public class NetworkHelper {
         return null;
     }
 
-    private static ArrayList<PicItem> returnGeos(InputStream iStream) {
+    private static ArrayList<GeoItem> returnGeos(InputStream iStream) {
     	//Log.e(TAG,"convertStreamToString next");
-    	/*final StringBuilder jsonStr = new StringBuilder(100);
-    	jsonStr.append(iStream);*/
+    	
     	final String jsonStr = NetworkHelper.convertStreamToString(iStream);
-    	//final ArrayList<WidgetItem> glist = new ArrayList<WidgetItem>();
-    	ArrayList<PicItem> gList = new ArrayList<PicItem>();
-		// getting data and if we don't we just get out of here!
+    	final ArrayList<GeoItem> gList = new ArrayList<GeoItem>();
+
+    	// getting data and if we don't we just get out of here!
 		JSONArray geonames = null;
 		try {
 			JSONObject json = new JSONObject(jsonStr.toString());
@@ -177,14 +176,16 @@ public class NetworkHelper {
 			e.printStackTrace();
 			return null;
 		} 
-		PicItem add2List;
+		GeoItem add2List;
 		for (int i = 0; i < geonames.length(); i++) {
 			try {
 				JSONObject geonameObj = geonames.getJSONObject(i);
-				add2List = new PicItem();
-				add2List.wikipediaUrl = geonameObj.getString("wikipediaUrl");
+				add2List = new GeoItem();
+				add2List.setWikipediaUrl(geonameObj.getString("wikipediaUrl"));
 				add2List.setTitle(geonameObj.getString("title"));
 				add2List.setSummary(geonameObj.getString("summary"));
+				add2List.latitude = geonameObj.getDouble("lat");
+				add2List.longitude = geonameObj.getDouble("lng");
 				//Log.d(TAG, "wiki url is " + add2List.getWikipediaUrl());
 				gList.add(add2List);
 				/* glist.add(new PicItem( geonameObj.getString("wikipediaUrl"), geonameObj
@@ -201,7 +202,7 @@ public class NetworkHelper {
 		return gList;
     }
     
-    static PicItem[] geoDataFetch(Context ctx) {
+    static GeoItem[] geoDataFetch(Context ctx) {
     	double[] gps = getGPS(ctx);
     	/*
     	 * fetch the location or not!
@@ -218,27 +219,27 @@ public class NetworkHelper {
        final StringBuilder scratch = new StringBuilder(10);
        scratch.append("http://ws.geonames.net/findNearbyWikipediaJSON?formatted=true&lat=").append(gps[0])
     		.append("&lng=").append(gps[1]).append("&username=wikimedia&lang=").append(lang);
-       final ArrayList<PicItem> tmpStructure = parseGeonamesPage(scratch.toString());
+       final ArrayList<GeoItem> tmpStructure = parseGeonamesPage(scratch.toString());
        //Log.d(TAG, scratch.toString() + " list length = " + tmpStructure.size());
         //clean up, clear stringbuilder
  	    scratch.setLength(0);
     	gps = null;
     	if(tmpStructure != null) {
-    		PicItem[] widgetList = new PicItem[tmpStructure.size()];
+    		GeoItem[] widgetList = new GeoItem[tmpStructure.size()];
     		widgetList = tmpStructure.toArray(widgetList);
         	//Log.d(TAG, "array length = " + widgetList.length);
         	tmpStructure.clear();
      	    return widgetList;
     	} 
-    	return new PicItem[0];
+    	return new GeoItem[0];
     	
     }
     
-    static ArrayList<PicItem> parseGeonamesPage(String urlstring) {
+    static ArrayList<GeoItem> parseGeonamesPage(String urlstring) {
     	//given a URL, fetch the web page and then process the buffered input stream into a scrolling widget collection
     	HttpURLConnection urlConnection = null;
     	//Log.d(TAG, "parse page");
-    	ArrayList<PicItem> widgetSvcCollection = null;
+    	ArrayList<GeoItem> widgetSvcCollection = null;
      	try {
      		final URL url = new URL(urlstring);
  	    	urlConnection = (HttpURLConnection) url.openConnection();
@@ -261,8 +262,8 @@ public class NetworkHelper {
  	        	
  	    } //have an array list of nearby wiki articles
      	//now take the wikipedia url and pull a picture out of the article
-		for(PicItem geoPage: widgetSvcCollection) {
-			geoPage.setPhoto(fetchGeoPhoto("http://" + geoPage.wikipediaUrl));
+		for(GeoItem geoPage: widgetSvcCollection) {
+			geoPage.setPhoto(fetchGeoPhoto(geoPage.wikipediaUrl));
 		}
 		//Log.d(TAG, "list size again " + widgetSvcCollection.size());
 		return widgetSvcCollection;
@@ -271,18 +272,7 @@ public class NetworkHelper {
     
     static Bitmap fetchGeoPhoto(String urlstring) {
     	
-    	StringBuilder sb = new StringBuilder(urlstring);
-		int index = sb.indexOf(".m.");
-/*		if(index == -1) {
-			index = sb.indexOf(".");
-			//Log.d(TAG, "dot index is " + index);
-			sb.insert(index, ".m");
-		}*/
-		index = sb.indexOf(".");
-		//Log.d(TAG, "dot index is " + index);
-		sb.insert(index, ".m");
-		urlstring = sb.toString();
-		sb.setLength(0);
+    	StringBuilder sb = new StringBuilder(100);
 		//Log.d(TAG, "fetchGeoPhoto " + urlstring);
     	HttpURLConnection urlConnection = null;
     	boolean hasImage = false;
@@ -305,7 +295,7 @@ public class NetworkHelper {
 						//Log.d(TAG, "end index " + end);
 						sb = new StringBuilder(sb.substring(start, end-8));
 						sb.insert(0, "http://");
-						//Log.d(TAG, sb.toString());
+						//Log.d(TAG, "has image " + sb.toString());
 					} //end, final string index										
 				} //end if, src tag present but no jpg
 			} else {
@@ -389,7 +379,7 @@ public class NetworkHelper {
 	}
 	
 	//code borrowed from the WikimediaFoundation's Phone Gap project.  The NearMe activity is cool!
-    private static double[] getGPS(Context ctx) {
+    public static double[] getGPS(Context ctx) {
 		final LocationManager lm = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
 		final List<String> providers = lm.getProviders(true);
 		/*

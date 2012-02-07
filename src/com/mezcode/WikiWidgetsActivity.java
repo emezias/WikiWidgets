@@ -1,6 +1,7 @@
 package com.mezcode;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.util.Log;
@@ -76,6 +77,7 @@ public class WikiWidgetsActivity extends Activity {
 		    mWebView.invalidate();
 			break;
 		case R.id.menu_location:
+			startActivity(new Intent(this, LocationActivity.class));
 			break;
 		case R.id.menu_photo:
 			//http://en.m.wikipedia.org/wiki/Template:POTD/2012-02-06

@@ -68,7 +68,7 @@ public class GeoViewFactory implements RemoteViewsService.RemoteViewsFactory {
         // Next, we set a fill-intent which to fill-in the pending intent template
         // set on the collection view in WikiWidgetProvider.
         final Bundle extras = new Bundle();
-        extras.putString(BaseStackProvider.URL_TAG, "http://" + thisView.wikipediaUrl);
+        extras.putString(BaseStackProvider.URL_TAG, thisView.wikipediaUrl);
         //Log.d(TAG, "set url as extra " + thisView.wikipediaUrl);
         final Intent fillInIntent = new Intent(); 
         fillInIntent.putExtras(extras);

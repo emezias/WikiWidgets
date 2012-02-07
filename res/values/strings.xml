@@ -22,9 +22,10 @@
     <string name="featureListTitle">Featured Articles</string>
     <string name="photoListTitle">Photo of the Day</string>
     <string name="geoListTitle">Update Location</string>
-    <string name="geoButtonHelp">Update the location data</string>
-    
     <string name="locMenu">Location</string>
     <string name="photoMenu">Photo of the Day</string>
     <string name="featureMenu">Featured Article</string>
+    
+    <string name="dialogTitle">Loading</string>
+    <string name="dialogMessage">Searching nearby locations, please wait</string>
 </resources>
