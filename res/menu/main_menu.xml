@@ -10,7 +10,6 @@
         android:visible="true" 
         android:title="@string/photoMenu" 
         android:enabled="true" 
-        android:icon="@android:drawable/ic_menu_camera"
         android:actionLayout="@layout/foto_menu_layout"
         android:showAsAction="ifRoom|withText"/>
     <item android:id="@+id/menu_feature" 

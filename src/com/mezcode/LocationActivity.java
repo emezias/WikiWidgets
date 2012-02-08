@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -120,8 +119,8 @@ public class LocationActivity extends MapActivity {
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
-            setListAdapter(new ArrayAdapter<String>(getActivity(),
-                    android.R.layout.simple_list_item_1, Shakespeare.TITLES));
+           /* setListAdapter(new ArrayAdapter<String>(getActivity(),
+                    android.R.layout.simple_list_item_1, Shakespeare.TITLES));*/
         }
 
         @Override
@@ -140,17 +139,19 @@ public class LocationActivity extends MapActivity {
 			final Context ctx = LocationActivity.this.getApplicationContext();
 			final double[] center = NetworkHelper.getGPS(ctx);
 			final GeoItem[] geoList = NetworkHelper.geoDataFetch(ctx);
-			final WikiOverlay ole = new WikiOverlay(getResources().getDrawable(R.drawable.pin));
+			final WikiOverlay ole = new WikiOverlay(new MapPoint());
 			
 			((MapController) mapView.getController()).setCenter(
 				new GeoPoint((int)(center[0] * Math.pow(10, 6)), (int)(center[1] * Math.pow(10, 6))));
-
+			OverlayItem point;
 			for(GeoItem item: geoList) {
-				ole.addOverlay(new OverlayItem(
+				point = new OverlayItem(
 						new GeoPoint((int)(item.latitude * Math.pow(10, 6)), (int)(item.longitude * Math.pow(10, 6))),
 						item.getTitle(), 
 						item.getWikipediaUrl()
-						));
+						);
+				point.setMarker(new MapPoint());
+				ole.addOverlay(point);
 			}
 			
 			return ole;
@@ -160,7 +161,15 @@ public class LocationActivity extends MapActivity {
 			mapView.getOverlays().add(result);
 			mapView.invalidate();
 			progressDialog.dismiss();
+			mPinList = result;
+			MapPoint.resetMapNumbers();
 		}
+	}
+	
+	private class AsyncReturnValues {
+		//TODO initialize fragment
+		WikiOverlay geos;
+		String[] titles;
 	}
 
 }
