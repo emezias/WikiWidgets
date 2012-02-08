@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:onClick="showPopup">
+	<ImageButton android:id="@+id/photo_menu_button"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" 
+	    android:src="@android:drawable/ic_menu_camera"
+	    android:onClick="showPopup"
+	    />
+	<TextView 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" 
+	    android:text="@string/photoMenu"
+	    android:textAppearance="@android:style/TextAppearance.Medium"
+	    android:layout_toRightOf="@id/photo_menu_button"
+	    android:layout_alignBottom="@id/photo_menu_button"
+	    android:layout_marginBottom="10dip"
+	    android:onClick="showPopup"
+	    />
+ </RelativeLayout>   
+

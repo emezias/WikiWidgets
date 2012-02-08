@@ -26,6 +26,8 @@
     <string name="photoMenu">Photo of the Day</string>
     <string name="featureMenu">Featured Article</string>
     
+    <string name="photoItem">Photo</string>
+    <string name="featureItem">Featured</string>
     <string name="dialogTitle">Loading</string>
     <string name="dialogMessage">Searching nearby locations, please wait</string>
 </resources>

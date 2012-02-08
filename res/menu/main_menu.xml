@@ -11,12 +11,13 @@
         android:title="@string/photoMenu" 
         android:enabled="true" 
         android:icon="@android:drawable/ic_menu_camera"
+        android:actionLayout="@layout/foto_menu_layout"
         android:showAsAction="ifRoom|withText"/>
     <item android:id="@+id/menu_feature" 
         android:visible="true" 
-        android:title="@string/featureMenu" 
         android:enabled="true" 
-        android:icon="@drawable/ic_menu_feature"
-        android:showAsAction="ifRoom|withText"/>
+        android:showAsAction="ifRoom|withText"
+        android:actionLayout="@layout/feature_menu_layout"
+        />
     
 </menu>
