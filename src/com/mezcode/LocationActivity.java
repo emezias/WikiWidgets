@@ -2,6 +2,7 @@ package com.mezcode;
 
 import java.util.ArrayList;
 
+import android.app.ListFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +12,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
@@ -111,6 +114,22 @@ public class LocationActivity extends MapActivity {
 		}
 
 	}
+	
+	public static class ArrayListFragment extends ListFragment {
+
+        @Override
+        public void onActivityCreated(Bundle savedInstanceState) {
+            super.onActivityCreated(savedInstanceState);
+            setListAdapter(new ArrayAdapter<String>(getActivity(),
+                    android.R.layout.simple_list_item_1, Shakespeare.TITLES));
+        }
+
+        @Override
+        public void onListItemClick(ListView l, View v, int position, long id) {
+            Log.i("FragmentList", "Item clicked: " + id);
+        }
+    }
+
 
 	private class UpdateGeos extends AsyncTask<Void, Void, WikiOverlay>{
 		protected void onPreExecute() {

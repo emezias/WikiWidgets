@@ -22,10 +22,9 @@
     <string name="featureListTitle">Featured Articles</string>
     <string name="photoListTitle">Photo of the Day</string>
     <string name="geoListTitle">Update Location</string>
-    <string name="locMenu">Location</string>
+    <string name="locMenu">Mapped Pages</string>
     <string name="photoMenu">Photo of the Day</string>
     <string name="featureMenu">Featured Article</string>
-    
     <string name="photoItem">Photo</string>
     <string name="featureItem">Featured</string>
     <string name="dialogTitle">Loading</string>
