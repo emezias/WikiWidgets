@@ -3,3 +3,5 @@
 /bin/*
 /bin
 /gen
+
+bin/classes.dex
