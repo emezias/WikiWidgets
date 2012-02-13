@@ -43,15 +43,15 @@ public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactor
 			switch(mWidgetType) {
 			case R.xml.feature_stack_info:
 			case R.xml.feature_list_info:
-			case R.xml.fon_feature_stack_info:
+/*			case R.xml.fon_feature_stack_info:
 			case R.xml.fon_feature_list_info:
-				webpage = new URL(NetworkHelper.FEATURED_FEED);
+*/				webpage = new URL(NetworkHelper.FEATURED_FEED);
 				break;
 			case R.xml.pic_stack_info:
 			case R.xml.pic_list_info:
-			case R.xml.fon_foto_stack_info:
+/*			case R.xml.fon_foto_stack_info:
 			case R.xml.fon_foto_list_info:
-				Log.d(TAG, "fetch photo stream");
+*/				Log.d(TAG, "fetch photo stream");
 				webpage = new URL(NetworkHelper.POTD_STREAM);
 			}
 			mFeedWidgetItems = NetworkHelper.fetchRssFeed(webpage);
@@ -76,17 +76,18 @@ public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactor
     }
         
     public static int fetchId(int position, int viewID) {
+    	//vertical stack of three items or photo on left with text on right?
 		switch(viewID) {
 		case R.xml.feature_stack_info:
 		case R.xml.geo_stack_info:
     		return (position % 2 == 0 ? R.layout.feature_widget_item
                     : R.layout.feature_widget_item2);
-		case R.xml.fon_feature_stack_info:
+		/*case R.xml.fon_feature_stack_info:
 		case R.xml.fon_geo_stack_info:
 		case R.xml.fon_foto_stack_info:
 		case R.xml.fon_foto_list_info:
 		case R.xml.fon_geo_list_info:
-		case R.xml.fon_feature_list_info:
+		case R.xml.fon_feature_list_info:*/
 		case R.xml.pic_stack_info:
 		case R.xml.pic_list_info:
 		case R.xml.geo_list_info:

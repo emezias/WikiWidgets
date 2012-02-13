@@ -20,7 +20,8 @@
 			android:layout_height="match_parent" 
 			android:contentDescription="@string/dialogTitle"
 			android:src="@drawable/refresh_btn" 
-			android:background="@android:color/transparent" 
+			android:scaleType="fitCenter"
+			android:background="@drawable/widget_item_background" 
 			android:layout_gravity="left" />	    
 	    
 	</LinearLayout>	 	    

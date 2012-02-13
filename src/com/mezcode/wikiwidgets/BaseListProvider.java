@@ -63,7 +63,8 @@ public class BaseListProvider extends AppWidgetProvider {
         for (int i = 0; i < appWidgetIds.length; ++i) {
             // Here we setup the intent which points to the WikiWidgetService which will
             // provide the views for this collection.
-        	if(mListLayoutId == R.xml.fon_geo_list_info || mListLayoutId == R.xml.geo_list_info) {
+        	// ||mListLayoutId == R.xml.fon_geo_list_info 
+        	if(mListLayoutId == R.xml.geo_list_info) {
         		provideGeoRemoteViews(context, appWidgetIds[i], mListLayoutId, appWidgetManager);
         	} else {
         		BaseStackProvider.provideRemoteViews(context, appWidgetIds[i], mListLayoutId, appWidgetManager, false);

@@ -82,20 +82,7 @@ public class BaseStackProvider extends AppWidgetProvider {
     		return new Intent(ctx, GeoListService.class);
     	case R.xml.geo_stack_info:
     		return new Intent(ctx, GeoStackService.class);
-    		
-    	case R.xml.fon_geo_list_info:
-    		return new Intent(ctx, FonGeoListService.class);
-    	case R.xml.fon_geo_stack_info:
-    		return new Intent(ctx, FonGeoStackService.class);
-    	case R.xml.fon_foto_list_info:
-    		//Log.d(TAG, "base stack setting service");
-    		return new Intent(ctx, FonFotoListService.class);
-    	case R.xml.fon_foto_stack_info:
-    		return new Intent(ctx, FonFotoStackService.class);
-    	case R.xml.fon_feature_list_info:
-    		return new Intent(ctx, FonFeatureListService.class);
-    	case R.xml.fon_feature_stack_info:
-    		return new Intent(ctx, FonFeatureStackService.class);
+    	
     	}
     	Log.e(TAG, "error assigning layoutId, null intent");
     	return null;
@@ -118,7 +105,7 @@ public class BaseStackProvider extends AppWidgetProvider {
     	case R.xml.geo_stack_info:
     		return new Intent(ctx, GeoStackProvider.class);
     		
-    	case R.xml.fon_geo_list_info:    		
+    	/*case R.xml.fon_geo_list_info:    		
     		return new Intent(ctx, FonGeoListProvider.class);
     	case R.xml.fon_geo_stack_info:
     		return new Intent(ctx, FonGeoStackProvider.class);
@@ -129,7 +116,7 @@ public class BaseStackProvider extends AppWidgetProvider {
     	case R.xml.fon_feature_list_info:
     		return new Intent(ctx, FonFeatureListProvider.class);
     	case R.xml.fon_feature_stack_info:
-    		return new Intent(ctx, FonFeatureStackProvider.class);
+    		return new Intent(ctx, FonFeatureStackProvider.class);*/
     	}
     	return new Intent(ctx, BaseStackProvider.class);
     }
@@ -163,10 +150,10 @@ public class BaseStackProvider extends AppWidgetProvider {
         	rv.setPendingIntentTemplate(R.id.list_view, pIntent);
         	switch(layoutID) {
         	case R.xml.feature_list_info:
-        	case R.xml.fon_feature_list_info:
+        	//case R.xml.fon_feature_list_info:
         		rv.setTextViewText(R.id.list_title, ctx.getString(R.string.featureListTitle));
         		break;
-        	case R.xml.fon_foto_list_info:
+        	//case R.xml.fon_foto_list_info:
         	case R.xml.pic_list_info:
         		Log.d(TAG, "set pic title");
         		rv.setTextViewText(R.id.list_title, ctx.getString(R.string.photoListTitle));

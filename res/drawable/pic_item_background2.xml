@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- based on sample weather list widget code from the Android examples -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-    <gradient android:startColor="#ee115511" android:endColor="#ee112211" android:angle="270" />
+    <gradient android:startColor="#ee888888" android:endColor="#eeaaaaaa" android:angle="270" />
     <corners android:radius="8dp" />
     <stroke
         android:width="3dp"

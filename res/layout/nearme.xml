@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/map_main"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
-    <com.google.android.maps.MapView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/mapview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:apiKey="0b88jb6kgwcCptWKXnY38IgEcsOfmdlcAdzn0tA"
-        android:clickable="true" />
-
-    <Button
-        android:id="@+id/redo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:text="@string/geoListTitle" android:textStyle="bold"/>
-
-</RelativeLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+	<RelativeLayout 
+	    android:id="@+id/map_main"
+	    android:layout_width="0dip"
+	    android:layout_height="match_parent" 
+	    android:layout_weight="25">
+	    <fragment class="com.mezcode.wikiwidgets.LocationList"
+            android:id="@+id/geo_list_detail"
+            android:layout_height="wrap_content" 
+	    	android:layout_width="match_parent" />
+	    <Button
+	        android:id="@+id/redo"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
+	        android:layout_centerHorizontal="true"
+	        android:layout_margin="25dp"
+	        android:onClick="geo_button"
+	        android:layout_below="@id/geo_list_detail"
+	        android:text="@string/geoListTitle" android:textStyle="bold"/>
+	</RelativeLayout>
+	
+	<com.google.android.maps.MapView
+	        android:id="@+id/mapview"
+			android:layout_width="0dip"
+            android:layout_weight="75"
+            android:layout_height="match_parent"
+	        android:apiKey="0b88jb6kgwcCptWKXnY38IgEcsOfmdlcAdzn0tA"
+	        android:clickable="true" />
+</LinearLayout>

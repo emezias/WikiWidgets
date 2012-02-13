@@ -29,4 +29,9 @@
     <string name="featureItem">Featured</string>
     <string name="dialogTitle">Loading</string>
     <string name="dialogMessage">Searching nearby locations, please wait</string>
+    
+    <string name="colorPrefTitle">Set Widget Color</string>
+    <string name="stackPrefTitle">Choose Type</string>
+    <string name="fontSizeTitle">Set Font Size</string>
+    <string name="contentPrefTitle">Data to Display</string>
 </resources>

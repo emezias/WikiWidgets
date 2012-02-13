@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
@@ -37,13 +36,13 @@ public class LocationActivity extends MapActivity {
 		mapView.setBuiltInZoomControls(true);
 		mapView.getController().setZoom(15);
 
-		((Button)findViewById(R.id.redo)).setOnClickListener(new OnClickListener() {			
+		/*((Button)findViewById(R.id.redo)).setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
 				new UpdateGeos().execute();
 				Log.d(TAG, "fetching location with Button click");
 			}
-		});
+		});*/
 	}
 		
 	@Override
@@ -54,6 +53,9 @@ public class LocationActivity extends MapActivity {
 		} else {
 			mapView.getOverlays().add(mPinList);
 			mapView.invalidate();
+			((ListFragment)getFragmentManager().findFragmentById(R.id.geo_list_detail))
+				.setListAdapter(new MyAdapter(mPinList));
+
 		}
 		
 	}
@@ -62,6 +64,14 @@ public class LocationActivity extends MapActivity {
 	protected boolean isRouteDisplayed() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public static void clearList() {
+		mPinList = null;
+	}
+	
+	public void geoButton(View v) {
+		Log.d(TAG, "button press");
 	}
 	
 	private void showDialog() {
@@ -76,7 +86,7 @@ public class LocationActivity extends MapActivity {
 	}
 
 	
-	private class WikiOverlay extends ItemizedOverlay<OverlayItem> {
+	public class WikiOverlay extends ItemizedOverlay<OverlayItem> {
 		
 		private ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
 
@@ -103,7 +113,7 @@ public class LocationActivity extends MapActivity {
 		protected boolean onTap(int index) {
 			
 			// Weirdest thing ever! index is always 0 and mOverlays size is 1
-			Log.d("WikiItemizedOverlay", "Index " + index + " Overlay title " + mOverlays.get(index).getTitle());
+			//Log.d("WikiItemizedOverlay", "Index " + index + " Overlay title " + mOverlays.get(index).getTitle());
 	        Toast.makeText(LocationActivity.this, getString(R.string.load_msg), Toast.LENGTH_SHORT).show();
 	        final Intent goBack = new Intent(LocationActivity.this, WikiWidgetsActivity.class);
 	        goBack.putExtra(BaseStackProvider.URL_TAG, mOverlays.get(index).getSnippet());
@@ -114,22 +124,6 @@ public class LocationActivity extends MapActivity {
 
 	}
 	
-	public static class ArrayListFragment extends ListFragment {
-
-        @Override
-        public void onActivityCreated(Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-           /* setListAdapter(new ArrayAdapter<String>(getActivity(),
-                    android.R.layout.simple_list_item_1, Shakespeare.TITLES));*/
-        }
-
-        @Override
-        public void onListItemClick(ListView l, View v, int position, long id) {
-            Log.i("FragmentList", "Item clicked: " + id);
-        }
-    }
-
-
 	private class UpdateGeos extends AsyncTask<Void, Void, WikiOverlay>{
 		protected void onPreExecute() {
 			showDialog();
@@ -138,7 +132,7 @@ public class LocationActivity extends MapActivity {
 		protected WikiOverlay doInBackground(Void... gps) {
 			final Context ctx = LocationActivity.this.getApplicationContext();
 			final double[] center = NetworkHelper.getGPS(ctx);
-			final GeoItem[] geoList = NetworkHelper.geoDataFetch(ctx);
+			GeoItem[] geoList = NetworkHelper.geoDataFetch(ctx);
 			final WikiOverlay ole = new WikiOverlay(new MapPoint());
 			
 			((MapController) mapView.getController()).setCenter(
@@ -153,7 +147,8 @@ public class LocationActivity extends MapActivity {
 				point.setMarker(new MapPoint());
 				ole.addOverlay(point);
 			}
-			
+			//mAdapter = new MyAdapter(ctx, geoList, false);
+			geoList = null;
 			return ole;
 		}
 		protected void onPostExecute(WikiOverlay result) {
@@ -163,13 +158,9 @@ public class LocationActivity extends MapActivity {
 			progressDialog.dismiss();
 			mPinList = result;
 			MapPoint.resetMapNumbers();
+			((ListFragment)getFragmentManager().findFragmentById(R.id.geo_list_detail)).setListAdapter(new MyAdapter(result));
+					//LocationActivity.this.findViewById(R.id.mapview)).setListAdapter(mAdapter);
 		}
 	}
 	
-	private class AsyncReturnValues {
-		//TODO initialize fragment
-		WikiOverlay geos;
-		String[] titles;
-	}
-
 }

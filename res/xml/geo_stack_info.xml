@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:minWidth="390dp"
-    android:minHeight="460dp"
-    android:updatePeriodMillis="144000"
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="250dp"
+    android:minHeight="250dp"
+    android:updatePeriodMillis="864000"
     android:initialLayout="@layout/widget_stack"
-    android:previewImage="@drawable/geo_stack"
+    android:previewImage="@drawable/fon_geo_stack"
+    android:resizeMode="horizontal|vertical"
+	android:autoAdvanceViewId="@id/stack_view"
     /> 
-    <!-- update happens every four hours, 14 400 seconds --> 
-    
