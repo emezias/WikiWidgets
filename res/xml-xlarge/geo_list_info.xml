@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!-- update happens every four hours, 14 400 seconds --> 
+	<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="390dp"
+    android:minHeight="460dp"
+    android:updatePeriodMillis="14000"
+    android:initialLayout="@layout/geo_list_layout"
+    android:previewImage="@drawable/geo_list"
+    /> 
