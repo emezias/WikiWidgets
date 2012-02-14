@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+	<!--  ListPreference android:key="stackPref"
+    	android:title="@string/stackPrefTitle"
+    	android:entryValues="@array/widgetType" 
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" 
+	<ListPreference android:key="contentPref"
+	    android:entryValues="@array/contentType"
+		android:title="@string/contentPrefTitle" 
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" -->
+	<ListPreference android:key="colorPref"
+		android:title="@string/colorPrefTitle" 
+		android:entryValues="@array/colors"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" />
+	<ListPreference android:key="fontPref"
+	    android:entryValues="@array/sizes"
+		android:title="@string/fontSizeTitle" 
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" />
+	
+</PreferenceScreen>
