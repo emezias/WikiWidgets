@@ -1,35 +1,27 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-    <string name="hello">Hello World, WikipediaActivity!</string>
     <string name="toast_msg">Loading Wikipedia</string>
     <string name="app_name">WikiWidgets</string>
     <string name="search_hint">Current location</string>
     <string name="empty_view_text">No Data.\nDo you have an internet connection?</string>
     <string name="load_msg">Loading Wikipedia</string>
     <string name="list_msg">Scroll through</string>
-    <string name="geoListTablet">Wild WikiWidgets \nLarge List of Nearby Wiki pages</string>
-    <string name="geoListFon">Wild WikiWidgets \nSmall List of Nearby pages</string>
-    <string name="geoStackTablet">Wild WikiWidgets \nLarge Stack, Nearby Wiki pages</string>
-    <string name="geoStackFon">Wild WikiWidgets \nSmall Stack of Nearby Wiki pages</string>
-    <string name="photoListTablet">Wild WikiWidgets \nLarge List of Wiki photos</string>
-    <string name="photoListFon">Wild WikiWidgets \nSmall List of Photo pages</string>
-    <string name="photoStackTablet">Wild WikiWidgets \nLarge Stack, Photo pages</string>
-    <string name="photoStackFon">Wild WikiWidgets \nSmall Stack of Photo pages</string>
-    <string name="featureListTablet">Wild WikiWidgets \nLarge List of Featured Wiki pages</string>
-    <string name="featureListFon">Wild WikiWidgets \nSmall List of Feature pages</string>
-    <string name="featureStackTablet">Wild WikiWidgets \nLarge Stack, Feature Wiki pages</string>
-    <string name="featureStackFon">Wild WikiWidgets \nSmall Stack of Feature pages</string>
+    <string name="geoListTablet">Wild WikiWidgets \n List of Nearby Wiki pages</string>
+    <string name="geoStackTablet">Wild WikiWidgets \n Stack, Nearby Wiki pages</string>
+    <string name="photoListTablet">Wild WikiWidgets \n List of Wiki photos</string>
+    <string name="photoStackTablet">Wild WikiWidgets \n Stack, Photo pages</string>
+    <string name="featureListTablet">Wild WikiWidgets \n List of Featured Wiki pages</string>
+    <string name="featureStackTablet">Wild WikiWidgets \n Stack, Feature Wiki pages</string>
     <string name="featureListTitle">Featured Articles</string>
     <string name="photoListTitle">Photo of the Day</string>
     <string name="geoListTitle">Update Location</string>
     <string name="locMenu">Mapped Pages</string>
-    <string name="photoMenu">Photo of the Day</string>
-    <string name="featureMenu">Featured Article</string>
+    <string name="photoMenu">Photo Pages</string>
+    <string name="featureMenu">Featured Pages</string>
     <string name="photoItem">Photo</string>
     <string name="featureItem">Featured</string>
     <string name="dialogTitle">Loading</string>
-    <string name="dialogMessage">Searching nearby locations, please wait</string>
-    
+    <string name="dialogMessage">Collecting Data, please wait</string>
     <string name="colorPrefTitle">Set Widget Color</string>
     <string name="stackPrefTitle">Choose Type</string>
     <string name="fontSizeTitle">Set Font Size</string>

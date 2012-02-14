@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  need some new colors for my graphs-->
+<resources>    
+    <color name="transparent">#00000000</color>    
+    <color name="lt_green">#8BFEA8</color>
+    <color name="lt_red">#FFA8A8</color>
+    <color name="lt_yellow">#FFFF84</color>
+    <color name="lt_blue">#DD88FD</color>
+    <color name="white">#ffffffff</color>
+    <color name="black">#ff000000</color>
+</resources>
+

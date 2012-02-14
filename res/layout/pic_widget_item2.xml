@@ -4,5 +4,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/pic_item_background2" >
-    <include layout="@layout/vertical_include" />
+    <include layout="@layout/pic_widget_include" />
 </RelativeLayout>

@@ -39,8 +39,16 @@
             android:name=".LocationActivity"
             android:configChanges="orientation"
             android:label="@string/app_name" />  
+        <activity
+            android:name=".PhotoList"
+            android:configChanges="orientation"
+            android:label="@string/app_name" />  
+        <activity
+            android:name=".FeatureList"
+            android:configChanges="orientation"
+            android:label="@string/app_name" />  
                   
-<receiver android:name=".PicStackProvider" 
+<receiver android:name=".widgets.PicStackProvider" 
 		    android:label="@string/photoStackTablet"
 		    android:enabled="true">
 	    	<intent-filter>
@@ -49,11 +57,11 @@
 	   	 	<meta-data android:name="android.appwidget.provider" 
 	               android:resource="@xml/pic_stack_info"  />
 		</receiver>
-		<service android:name=".PicStackService"
+		<service android:name=".widgets.PicStackService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
 
-<receiver android:name=".PicListProvider" 
+<receiver android:name=".widgets.PicListProvider" 
 		    android:label="@string/photoListTablet"
 		    android:enabled="true">
 	    	<intent-filter>
@@ -62,11 +70,11 @@
 	   	 	<meta-data android:name="android.appwidget.provider" 
 	               android:resource="@xml/pic_list_info"  />
 		</receiver>
-		<service android:name=".PicListService"
+		<service android:name=".widgets.PicListService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
 
-<receiver android:name=".GeoStackProvider" 
+<receiver android:name=".widgets.GeoStackProvider" 
 		    android:label="@string/geoStackTablet"
 		    android:enabled="true">
 	    	<intent-filter>
@@ -76,11 +84,11 @@
 	               android:resource="@xml/geo_stack_info"  />
 		</receiver>
 		
-		<service android:name=".GeoStackService"
+		<service android:name=".widgets.GeoStackService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
 		
-<receiver android:name=".GeoListProvider" 
+<receiver android:name=".widgets.GeoListProvider" 
 		    android:label="@string/geoListTablet"
 		    android:enabled="true">
 	    	<intent-filter>
@@ -89,11 +97,11 @@
 	   	 	<meta-data android:name="android.appwidget.provider" 
 	               android:resource="@xml/geo_list_info"  />
 		</receiver>
-		<service android:name=".GeoListService"
+		<service android:name=".widgets.GeoListService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
 				
-<receiver android:name=".FeatureStackProvider" 
+<receiver android:name=".widgets.FeatureStackProvider" 
 		    android:label="@string/featureStackTablet"
 		    android:enabled="true">
 	    	<intent-filter>
@@ -102,11 +110,11 @@
 	   	 	<meta-data android:name="android.appwidget.provider" 
 	               android:resource="@xml/feature_stack_info"  />
 		</receiver>
-		<service android:name=".FeatureStackService"
+		<service android:name=".widgets.FeatureStackService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
 
-<receiver android:name=".FeatureListProvider" 
+<receiver android:name=".widgets.FeatureListProvider" 
 		    android:label="@string/featureListTablet"
 		    android:enabled="true">
 	    	<intent-filter>
@@ -115,7 +123,7 @@
 	   	 	<meta-data android:name="android.appwidget.provider" 
 	               android:resource="@xml/feature_list_info"  />
 		</receiver>
-		<service android:name=".FeatureListService"
+		<service android:name=".widgets.FeatureListService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
 				

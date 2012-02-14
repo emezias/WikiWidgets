@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.maps.OverlayItem;
+import com.mezcode.wikiwidgets.widgets.BaseStackProvider;
 
 public class LocationList extends ListFragment {
 	//Keeping it simple

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Modeled on an Android widget example project, weather list -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient android:startColor="#dd800080" android:endColor="#eeDB00DB" android:angle="270" />
+    <corners android:radius="8dp" />
+    <stroke
+        android:width="3dp"
+        android:color="#ff666666" />
+</shape>

@@ -50,7 +50,7 @@ public class PicItem {
 	public void setTitle(String title) {
 		sb.append(title);
 		sb.delete(0, sb.indexOf(": ") +1);
-		this.title = sb.toString();
+		this.title = Html.fromHtml(sb.toString()).toString();
 		sb.setLength(0);
 	}
 
@@ -64,7 +64,7 @@ public class PicItem {
 		while(!Character.isLetter(sb.charAt(0))) {
 			sb.deleteCharAt(0);
 		}
-		this.summary = sb.toString();
+		this.summary = Html.fromHtml(sb.toString()).toString();
 		//Log.d(TAG, "summary:" + this.summary);
 		sb.setLength(0);
 		//setPhoto(summary, sum_ctx);

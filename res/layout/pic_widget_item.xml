@@ -5,5 +5,5 @@
     android:layout_height="match_parent"
     android:background="@drawable/widget_item_background" 
     android:layout_margin="5dp" >
-    <include layout="@layout/vertical_include" />
+    <include layout="@layout/pic_widget_include" />
 </RelativeLayout>

@@ -4,9 +4,23 @@
         android:visible="true" 
         android:title="@string/locMenu" 
         android:enabled="true" 
-        android:icon="@android:drawable/ic_menu_mylocation"
+        android:icon="@drawable/ic_menu_mylocation"
         android:showAsAction="ifRoom|withText"/>
     <item android:id="@+id/menu_photo" 
+        android:visible="true" 
+        android:title="@string/photoMenu" 
+        android:enabled="true" 
+        android:icon="@drawable/ic_menu_camera"
+        android:showAsAction="ifRoom|withText"/>
+    <item android:id="@+id/menu_feature" 
+        android:visible="true" 
+        android:enabled="true" 
+        android:title="@string/featureMenu"
+        android:icon="@drawable/ic_menu_feature"
+        android:showAsAction="ifRoom|withText"
+        />
+</menu>
+<!-- <item android:id="@+id/menu_photo" 
         android:visible="true" 
         android:title="@string/photoMenu" 
         android:enabled="true" 
@@ -17,6 +31,4 @@
         android:enabled="true" 
         android:showAsAction="ifRoom|withText"
         android:actionLayout="@layout/feature_menu_layout"
-        />
-    
-</menu>
+        /> -->

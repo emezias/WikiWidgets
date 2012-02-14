@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="widgetType">
+        <item>Card Deck</item>
+        <item>Scrolling List</item>
+    </string-array>
+    
+    
+	<string-array name="contentType">
+		<item>Photo of the Day</item>
+		<item>Nearby</item>
+		<item>Featured Articles</item>
+	</string-array>
+	 
+	<string-array name="colors">
+		<item>Gray</item>
+		<item>Purple</item>
+		<item>Blue</item>
+		<item>Green</item>
+		<item>Gold</item>
+		<item>Red</item>
+	</string-array>
+	
+	<string-array name="sizes">
+	    <item>Large</item>
+	    <item>Medium</item>
+	    <item>Small</item>
+	</string-array>
+
+</resources>

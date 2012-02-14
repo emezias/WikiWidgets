@@ -10,9 +10,9 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
@@ -21,11 +21,11 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
+import com.mezcode.wikiwidgets.widgets.BaseStackProvider;
 
 public class LocationActivity extends MapActivity {
 	private static final String TAG = "LocationActivity";
 	private MapView mapView;
-	private ProgressDialog progressDialog;
 	private static WikiOverlay mPinList;
 
 	@Override
@@ -66,23 +66,42 @@ public class LocationActivity extends MapActivity {
 		return false;
 	}
 	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		//TODO feature menu
+	    getMenuInflater().inflate(R.menu.main_menu, menu);
+	    MenuItem tmp = menu.findItem(R.id.menu_location);
+	    if(tmp != null) {
+	    	menu.removeItem(tmp.getItemId());
+	    }
+	    return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		WikiWidgetsActivity.handleActions(this, item.getItemId());
+		return super.onContextItemSelected(item);
+	}
+	
 	public static void clearList() {
 		mPinList = null;
 	}
 	
 	public void geoButton(View v) {
+		//TODO
 		Log.d(TAG, "button press");
 	}
 	
-	private void showDialog() {
+	public static ProgressDialog getProgress(Context ctx) {
 		//display a dialog while the async task is running
-		progressDialog = new ProgressDialog(this);
+		final ProgressDialog progressDialog = new ProgressDialog(ctx, R.style.CustomeDialog);
 		progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		progressDialog.setTitle(getString(R.string.dialogTitle));
+		progressDialog.setTitle(ctx.getString(R.string.dialogTitle));
 		progressDialog.setCancelable(false);
         progressDialog.setIndeterminate(true);
-		progressDialog.setMessage(getString(R.string.dialogMessage));
+		progressDialog.setMessage(ctx.getString(R.string.dialogMessage));
 		progressDialog.show();
+		return progressDialog;
 	}
 
 	
@@ -125,8 +144,9 @@ public class LocationActivity extends MapActivity {
 	}
 	
 	private class UpdateGeos extends AsyncTask<Void, Void, WikiOverlay>{
+		ProgressDialog pd;
 		protected void onPreExecute() {
-			showDialog();
+			pd = getProgress(LocationActivity.this);
 			mapView.getOverlays().clear();
 		}
 		protected WikiOverlay doInBackground(Void... gps) {
@@ -155,7 +175,7 @@ public class LocationActivity extends MapActivity {
 			//result.enableMyLocation();
 			mapView.getOverlays().add(result);
 			mapView.invalidate();
-			progressDialog.dismiss();
+			pd.dismiss();
 			mPinList = result;
 			MapPoint.resetMapNumbers();
 			((ListFragment)getFragmentManager().findFragmentById(R.id.geo_list_detail)).setListAdapter(new MyAdapter(result));

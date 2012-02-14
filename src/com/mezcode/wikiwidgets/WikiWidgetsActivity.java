@@ -1,18 +1,22 @@
 package com.mezcode.wikiwidgets;
 
+import com.mezcode.wikiwidgets.widgets.BaseStackProvider;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.webkit.WebView;
-import android.widget.PopupMenu;
-import android.widget.PopupMenu.OnMenuItemClickListener;
+import android.webkit.WebViewClient;
 
-public class WikiWidgetsActivity extends Activity implements OnMenuItemClickListener {
+public class WikiWidgetsActivity extends Activity { //implements OnMenuItemClickListener {
 	/*
 	 * This is the start activity for the app
 	 * It is a choice when the user wants to open a wikipedia page from the browser
@@ -21,16 +25,25 @@ public class WikiWidgetsActivity extends Activity implements OnMenuItemClickList
 	 */
 	private static final String TAG = "WikiWidgetsActivity";
 	private WebView mWebView;
-	private ItemFields[] mPhotoUrls = null;
-	private ItemFields[] mFeatureUrls = null;
+	/*private ItemFields[] mPhotoUrls = null;
+	private ItemFields[] mFeatureUrls = null;*/
 	
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.widget_activity);
 	    //cache the WebView instead of doing a lookup for each call
 	    mWebView = (WebView) findViewById(R.id.my_webview);
-	    if(mWebView != null) mWebView.getSettings().setJavaScriptEnabled(true);
-	    
+	    if(mWebView != null) {
+	    	mWebView.getSettings().setJavaScriptEnabled(true);
+	    	mWebView.getSettings().setBuiltInZoomControls(true);
+	    	mWebView.setWebViewClient(new MyClient());
+	    	mWebView.requestFocusFromTouch(); 
+	    }
+    	final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);  
+        if (!prefs.contains("license")) {
+        	//startActivityForResult((new Intent(ctxt, EULActivity.class)), LICENSE);         	
+        }    	//TODO Invalidate the action bar on rotation
+
 	    /*
 	     * I want two navigation mode entries on the action bar so I have to use a custom, action view
 	     * 
@@ -85,6 +98,33 @@ public class WikiWidgetsActivity extends Activity implements OnMenuItemClickList
 	    return super.onCreateOptionsMenu(menu);
 	}
 	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Three menu items for each data type
+		handleActions(this, item.getItemId());
+		return super.onContextItemSelected(item);
+	}
+
+	//TODO Share Action provider
+	public static void handleActions(Context ctx, int itemID) {
+		switch(itemID) {
+		case R.id.menu_feature:
+			ctx.startActivity(new Intent(ctx, FeatureList.class));
+			break;
+		case R.id.menu_location:
+			ctx.startActivity(new Intent(ctx, LocationActivity.class));
+			break;
+		case R.id.menu_photo:
+			ctx.startActivity(new Intent(ctx, PhotoList.class));
+			break;
+		case android.R.id.home:
+			final Intent tnt = new Intent(ctx, WikiWidgetsActivity.class);
+			tnt.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			ctx.startActivity(new Intent(ctx, WikiWidgetsActivity.class));
+			
+		}
+	}
+
 	String returnDateForUrl(boolean photo) {
 		final Time t = new Time(); t.setToNow();
 		final StringBuilder sb = new StringBuilder("http://en.m.wikipedia.org/wiki/");
@@ -146,37 +186,35 @@ public class WikiWidgetsActivity extends Activity implements OnMenuItemClickList
 		return listVals;
 	}
 
+	//some code from the WebView tutorial to create expected behavior
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Three menu items for each data type
-		switch(item.getItemId()) {
-		case R.id.menu_feature:
-			//http://en.m.wikipedia.org/wiki/Wikipedia:Today%27s_featured_article/February_5%2C_2012
-			mWebView.loadUrl(returnDateForUrl(false));
-		    mWebView.invalidate();
-			break;
-		case R.id.menu_location:
-			startActivity(new Intent(this, LocationActivity.class));
-			break;
-		case R.id.menu_photo:
-			showPopup(item.getActionView());
-			//http://en.m.wikipedia.org/wiki/Template:POTD/2012-02-06
-			//mWebView.loadUrl(returnDateForUrl(true));
-		    //mWebView.invalidate();			
-			break;
-		}
-		return super.onContextItemSelected(item);
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
+	        mWebView.goBack();
+	        return true;
+	    }
+	    return super.onKeyDown(keyCode, event);
 	}
+
+	private class MyClient extends WebViewClient {
+		//don't launch the browser if a link is clicked
+	    @Override
+	    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+	        view.loadUrl(url);
+	        return true;
+	    }
+	}
+
 	
-	public void showPopup(View v) {
+	/*public void showPopup(View v) {
 	    PopupMenu popup = new PopupMenu(this, v);
 	    Menu m = popup.getMenu();
 	    if(mPhotoUrls == null) mPhotoUrls = returnMenuItems(true);
 	    for(int i = 0; i < 10; i++) {
 	    	m.add((mPhotoUrls[i]).itemTitle);
 	    }
-	    /*MenuInflater inflater = popup.getMenuInflater();
-	    inflater.inflate(R.menu.actions, popup.getMenu());*/
+	    MenuInflater inflater = popup.getMenuInflater();
+	    inflater.inflate(R.menu.actions, popup.getMenu());
 	    popup.setOnMenuItemClickListener(this);
 	    popup.show();
 	}
@@ -188,8 +226,8 @@ public class WikiWidgetsActivity extends Activity implements OnMenuItemClickList
 	    for(int i = 0; i < 10; i++) {
 	    	fm.add((mFeatureUrls[i]).itemTitle);
 	    }
-	    /*MenuInflater inflater = popup.getMenuInflater();
-	    inflater.inflate(R.menu.actions, popup.getMenu());*/
+	    MenuInflater inflater = popup.getMenuInflater();
+	    inflater.inflate(R.menu.actions, popup.getMenu());
 	    fpopup.setOnMenuItemClickListener(this);
 	    fpopup.show();
 	}
@@ -256,7 +294,7 @@ public class WikiWidgetsActivity extends Activity implements OnMenuItemClickList
 			
 		}
 		return listVals;
-	}
+	} */
 
 
 }

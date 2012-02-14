@@ -15,28 +15,35 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 
+import com.mezcode.wikiwidgets.widgets.BaseStackProvider;
+
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
+import android.text.format.Time;
 import android.util.Log;
 import android.util.Xml;
+import android.widget.Toast;
 
 public class NetworkHelper {
 	private static final String TAG = "NetworkHelper";
-    
+    private static final Time myTime = new Time();
     static final int LOCATION = 1;
     static final int ATOM_FEED = 2;
     static final int PHOTO = 3;
     
-    static final String POTD_STREAM = "http://toolserver.org/~skagedal/feeds/potd.xml";
-    static final String FEATURED_FEED = "http://toolserver.org/~skagedal/feeds/fa.xml";
+    public static final String POTD_STREAM = "http://toolserver.org/~skagedal/feeds/potd.xml";
+    public static final String FEATURED_FEED = "http://toolserver.org/~skagedal/feeds/fa.xml";
     
 	static final  String DESCRIPTION = "description";
     static final  String LINK = "link";
     static final  String TITLE = "title";
     static final  String ITEM = "item";
+    
+    public static PicItem[] mPhotos = null, mFeatures = null;
         
     static ArrayList<PicItem> returnListFromRSS(BufferedInputStream is) {   
     	//This method will parse the atom feed from the url connection stream
@@ -202,7 +209,7 @@ public class NetworkHelper {
 		return gList;
     }
     
-    static GeoItem[] geoDataFetch(Context ctx) {
+    public static GeoItem[] geoDataFetch(Context ctx) {
     	double[] gps = getGPS(ctx);
     	/*
     	 * fetch the location or not!
@@ -316,7 +323,7 @@ public class NetworkHelper {
     	return null;
     }
     
-    static PicItem[] fetchRssFeed(URL url) {
+    public static PicItem[] fetchRssFeed(URL url) {
     	//given a URL, fetch the web page and then process the buffered input stream into a scrolling widget collection
     	HttpURLConnection urlConnection = null;
     	
@@ -324,7 +331,7 @@ public class NetworkHelper {
  	    	//URL url = new URL(urlstring);
  	    	urlConnection = (HttpURLConnection) url.openConnection();
  	    	int rcode = urlConnection.getResponseCode();
- 	    	//Log.d(TAG, "server response code: " +  rcode);
+ 	    	Log.d(TAG, "server response code: " +  rcode);
 			if ((rcode >= 200) && (rcode < 300)) {
 				BufferedInputStream is = new BufferedInputStream(urlConnection.getInputStream()); 
 				final ArrayList<PicItem> widgetSvcCollection = returnListFromRSS(is);
@@ -375,7 +382,7 @@ public class NetworkHelper {
 			}
 		}
 		//Log.d(TAG, "returning now, " + sb.toString())
-;		return sb.toString();
+		return sb.toString();
 	}
 	
 	//code borrowed from the WikimediaFoundation's Phone Gap project.  The NearMe activity is cool!
@@ -402,4 +409,21 @@ public class NetworkHelper {
 		}
 		return gps;
 	}
+    
+    public static void loadPageFromList(Context ctx, String item) {
+    	Toast.makeText(ctx, ctx.getString(R.string.toast_msg), Toast.LENGTH_LONG).show();
+		final Intent tnt = new Intent(ctx, WikiWidgetsActivity.class);
+/*		final Intent tnt = new Intent("android.intent.action.VIEW", Uri.parse(item));
+        tnt.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);*/
+		tnt.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        tnt.putExtra(BaseStackProvider.URL_TAG, item);
+        ctx.startActivity(tnt);
+    }
+    
+    public static int fetchYearDay() {
+		//method helps determine if the day is changed and new data should be collected from the network
+		myTime.setToNow();
+		return myTime.yearDay;
+	}
+
 }

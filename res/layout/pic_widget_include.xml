@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView android:id="@+id/list_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="200dp"
+        android:contentDescription="@string/photoItem"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        />
+    <TextView 
+	    android:id="@+id/text1"
+	    android:layout_width="match_parent"
+   		android:layout_height="wrap_content"
+   		style="@style/ItemTitle"
+   		android:minHeight="50dp"
+		android:layout_below="@id/list_image"
+		android:layout_marginBottom="2dp"
+		/>
+	<TextView 
+	    android:id="@+id/text2"
+	    android:layout_width="match_parent"
+   		android:layout_height="wrap_content"
+      	style="@style/Text2"
+	    android:layout_below="@id/text1"
+		/>
+</merge>

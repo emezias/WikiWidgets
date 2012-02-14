@@ -1,67 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
     
-    <LinearLayout android:id="@+id/header"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_margin="10dp"
-	    android:gravity="center">
-	    <ImageView android:id="@+id/widget_pic"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="right"
-	        android:src="@drawable/icon"
-	        android:contentDescription="@string/app_name"
-	        android:layout_margin="5dp"
-	        />
-	    <TextView 
-		    android:id="@+id/widget_item"
-		    android:layout_width="wrap_content"
-	   		android:layout_height="wrap_content"
-	   		android:minWidth="80dp"
-		    android:layout_gravity="left"
-		    android:textAppearance="?android:attr/textAppearanceLarge"
-		    android:textColor="#000000"
-		    android:textStyle="bold"
-		    android:padding="8dip"
-			android:layout_marginTop="15dp"
-			/>
-	</LinearLayout>
-	<TextView 
-	    android:id="@+id/widget_summary"
-	    android:layout_width="match_parent"
-   		android:layout_height="wrap_content"
-      	android:textStyle="italic"
-	    android:textColor="#444444"
-	    android:ellipsize="end"
-	    android:textAppearance="?android:attr/textAppearanceMedium"
-	    android:layout_below="@id/header"
-	    android:padding="6dip"
+    <TextView android:id="@+id/text1"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			style="@style/ItemTitle"
+			android:layout_alignParentTop="true"
 		/>
-	<!-- <LinearLayout android:id="@+id/header"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_margin="10dp"
-	    android:gravity="center">
-	    <ImageView android:id="@+id/widget_pic"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="right"
-	        android:src="@drawable/icon"
-	        android:contentDescription="@string/app_name"
-	        android:layout_margin="5dp"
-	        />
-	    <TextView 
-		    android:id="@+id/widget_item"
-		    android:layout_width="wrap_content"
-	   		android:layout_height="wrap_content"
-	   		android:minWidth="80dp"
-		    android:layout_gravity="left"
-		    android:textAppearance="?android:attr/textAppearanceLarge"
-		    android:textColor="#ffffff"
-		    android:textStyle="bold"
-		    android:padding="8dip"
-			android:layout_marginTop="15dp"
-			/>
-	</LinearLayout> --> 
+    
+    <!-- ?android:attr/listPreferredItemHeight -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+   	 	android:layout_height="wrap_content"
+   	 	android:layout_below="@id/text1"
+   	 	>
+        <ImageView android:id="@+id/list_image"
+            android:layout_width="0dip"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.25"
+			android:layout_margin="15dip"
+			android:contentDescription="@string/photoItem"
+	    	/>   
+        <TextView android:id="@+id/text2"
+			android:layout_width="0dip"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.65"
+			android:layout_margin="15dp"
+	    	style="@style/Text2"
+			android:maxLines="10"
+		/> 
+	</LinearLayout>
 </merge>
