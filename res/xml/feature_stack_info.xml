@@ -4,7 +4,7 @@
     android:minHeight="250dp"
     android:updatePeriodMillis="864000"
     android:initialLayout="@layout/widget_stack"
-    android:previewImage="@drawable/fon_feature_stack"
+    android:previewImage="@drawable/feature_stack"
     android:resizeMode="horizontal|vertical"
 	android:autoAdvanceViewId="@id/stack_view"
     /> 

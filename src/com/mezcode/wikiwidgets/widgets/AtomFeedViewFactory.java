@@ -5,6 +5,7 @@ import java.net.URL;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -15,11 +16,12 @@ import com.mezcode.wikiwidgets.PicItem;
 import com.mezcode.wikiwidgets.R;
 
 public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactory {
+    private static final String TAG = "AtomWidgetViewFactory";
+
     private PicItem[] mFeedWidgetItems;
     private int mWidgetType;
     private static String mPkg;
-    //private static Context mContext;
-    private static final String TAG = "AtomWidgetViewFactory";
+    private static Bitmap mIcon;
 
    /* public AtomWidgetViewFactory(Context context, Intent intent) {
         //mContext = context.getApplicationContext();   
@@ -110,10 +112,10 @@ public class AtomFeedViewFactory implements RemoteViewsService.RemoteViewsFactor
         /*************/
         
         if(displayItem.getPhoto() != null) {
-        	Log.d(TAG, "set Image, actual photo " + position);
+        	//Log.d(TAG, "set Image, actual photo " + position);
         	rv.setImageViewBitmap(R.id.list_image, displayItem.getPhoto());
         } else {
-        	Log.d(TAG, "set Image, no photo " + position);
+        	//Log.d(TAG, "set Image, no photo " + position);
         	rv.setImageViewResource(R.id.list_image, R.drawable.icon);
         }
         /*************/

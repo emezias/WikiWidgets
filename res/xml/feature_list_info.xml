@@ -4,6 +4,6 @@
     android:minHeight="250dp"
     android:updatePeriodMillis="864000"
     android:initialLayout="@layout/widget_list"
-    android:previewImage="@drawable/fon_feature_list"
+    android:previewImage="@drawable/list_widget_preview"
     android:resizeMode="horizontal|vertical"
     /> 

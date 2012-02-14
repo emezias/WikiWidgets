@@ -63,6 +63,8 @@ public class GeoViewFactory implements RemoteViewsService.RemoteViewsFactory {
         rv.setTextViewText(R.id.text2, thisView.getSummary());
         if(thisView.getPhoto() != null) {
         	rv.setImageViewBitmap(R.id.list_image, thisView.getPhoto());
+        } else {
+        	rv.setImageViewResource(R.id.list_image, R.drawable.icon);
         }
         
         /*rv.setTextViewText(R.id.widget_url, mWidgetItems.get(position).url);

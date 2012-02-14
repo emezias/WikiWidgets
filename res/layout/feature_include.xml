@@ -18,14 +18,14 @@
             android:layout_width="0dip"
 			android:layout_height="wrap_content"
 			android:layout_weight="0.25"
-			android:layout_margin="15dip"
+			android:layout_marginTop="15dip"
 			android:contentDescription="@string/photoItem"
 	    	/>   
         <TextView android:id="@+id/text2"
 			android:layout_width="0dip"
 			android:layout_height="wrap_content"
 			android:layout_weight="0.65"
-			android:layout_margin="15dp"
+			android:layout_margin="8dp"
 	    	style="@style/Text2"
 			android:maxLines="10"
 		/> 

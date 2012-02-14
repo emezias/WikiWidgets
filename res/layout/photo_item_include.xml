@@ -4,7 +4,7 @@
             android:layout_width="0dip"
 			android:layout_height="match_parent"
 			android:layout_weight="0.5"
-			android:layout_margin="10dip"
+			android:layout_margin="5dip"
 			android:contentDescription="@string/photoItem"
 	    	/>   
     <!-- ?android:attr/listPreferredItemHeight -->

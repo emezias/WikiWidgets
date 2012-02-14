@@ -15,12 +15,12 @@
 	    
 	    <ImageButton android:id="@+id/fresh_btn"
 			android:layout_width="wrap_content"
-			android:layout_height="match_parent" 
+			android:layout_height="wrap_content" 
 			android:contentDescription="@string/dialogTitle"
 			android:src="@drawable/refresh_btn" 
 			android:scaleType="fitCenter"
 			android:background="@drawable/widget_item_background" 
-			android:layout_gravity="left" />	    
+			android:padding="4dip" />	    
 	    
 	</LinearLayout>	 	    
 </merge>

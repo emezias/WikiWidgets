@@ -5,5 +5,5 @@
     android:minHeight="250dp"
     android:updatePeriodMillis="14000"
     android:initialLayout="@layout/geo_list_layout"
-    android:previewImage="@drawable/fon_geo_list"
+    android:previewImage="@drawable/geo_list"
     /> 
