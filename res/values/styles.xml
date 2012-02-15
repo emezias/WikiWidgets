@@ -6,6 +6,11 @@
         <item name="android:textSize">20sp</item>
     </style>
     
+    <style name="PrefsStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:textAppearance">@android:attr/textAppearanceLarge</item>
+        <item name="android:gravity">center</item>
+    </style>
+    
     <style name="SwitcherFont" parent="@android:style/TextAppearance.Large">
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:layout_centerVertical">true</item>
@@ -15,13 +20,14 @@
         <item name="android:textColor">#444444</item>
     </style>
     
-    <!-- style name="ListPhoto" parent="@android:style/TextAppearance.Large">
-        <item name="android:layout_margin">10dp</item>
+    <style name="GeoButton" parent="@android:style/Holo.SegmentedButton">
+        <item name="android:layout_marginTop">5dp</item>
         <item name="android:layout_centerHorizontal">true</item>
-        <item name="android:gravity">center</item>
-        <item name="android:contentDescription">@string/photoItem</item>
-        </style> 
-        image view style was not quite worth the effort... -->
+		<item name="android:onClick">geo_button</item>
+	    <item name="android:padding">8dp</item>
+	    <item name="android:scaleType">fitXY</item>
+	    <item name="android:background">@drawable/blue_bg</item>
+	    </style> 
         
     <style name="ItemTitle" parent="@android:style/TextAppearance.Large">
         <item name="android:padding">8dp</item>

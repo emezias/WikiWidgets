@@ -22,8 +22,18 @@
     <string name="featureItem">Featured</string>
     <string name="dialogTitle">Loading</string>
     <string name="dialogMessage">Collecting Data, please wait</string>
-    <string name="colorPrefTitle">Set Widget Color</string>
-    <string name="stackPrefTitle">Choose Type</string>
-    <string name="fontSizeTitle">Set Font Size</string>
+    <string name="colorPrefTitle">\nSet Widget Color\n</string>
+    <string name="stackPrefTitle">\nSet the Widget Look\n</string>
+    <string name="intentPrefTitle">\nSet Widget Action?\n</string>
+    <string name="fontSizeTitle">\nFont Size\n</string>
     <string name="contentPrefTitle">Data to Display</string>
+    <string name="geo_search_title">Location to display</string>
+    <string name="geo_pos">Find</string>
+    <string name="geo_neg">Cancel</string>
+    <string name="geo_err">No Pages found</string>
+    <string name="geo_hint">City, State (or more specific)</string>
+    <string name="date_btn">Pick a Date</string>
+    
+    <string name="geo_button1">Get My Location</string>
+    <string name="geo_button2">Set a Location</string>
 </resources>

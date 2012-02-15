@@ -6,4 +6,5 @@
     android:initialLayout="@layout/widget_list"
     android:resizeMode="horizontal|vertical"
 	android:previewImage="@drawable/icon"
+    android:configure="WidgetConfigActivity"
     /> 

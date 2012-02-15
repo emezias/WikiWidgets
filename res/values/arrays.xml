@@ -6,12 +6,10 @@
         <item>Scrolling List</item>
     </string-array>
     
-    
-	<string-array name="contentType">
-		<item>Photo of the Day</item>
-		<item>Nearby</item>
-		<item>Featured Articles</item>
-	</string-array>
+    <string-array name="intentSetting">
+        <item>Choose App</item>
+        <item>Open in WikiWidgets</item>
+    </string-array>
 	 
 	<string-array name="colors">
 		<item>Gray</item>

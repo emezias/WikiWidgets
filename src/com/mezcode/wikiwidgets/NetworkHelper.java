@@ -209,14 +209,8 @@ public class NetworkHelper {
 		return gList;
     }
     
-    public static GeoItem[] geoDataFetch(Context ctx) {
-    	double[] gps = getGPS(ctx);
-    	/*
-    	 * fetch the location or not!
-    	 * TODO, cache old data with a serialized pref, 
-    	 * pop toast or show that gps is not available some way
-    	 * TODO refresh button
-    	 */
+    static GeoItem[] geoDataFetch(Context ctx, double lat, double lng) {
+    	
     	final String lang;
     	if(WikiWidgetsApp.language == null) {
     		lang = "en";
@@ -224,13 +218,12 @@ public class NetworkHelper {
     		lang = WikiWidgetsApp.language;
     	}
        final StringBuilder scratch = new StringBuilder(10);
-       scratch.append("http://ws.geonames.net/findNearbyWikipediaJSON?formatted=true&lat=").append(gps[0])
-    		.append("&lng=").append(gps[1]).append("&username=wikimedia&lang=").append(lang);
+       scratch.append("http://ws.geonames.net/findNearbyWikipediaJSON?formatted=true&lat=").append(lat)
+    		.append("&lng=").append(lng).append("&username=wikimedia&lang=").append(lang);
        final ArrayList<GeoItem> tmpStructure = parseGeonamesPage(scratch.toString());
        //Log.d(TAG, scratch.toString() + " list length = " + tmpStructure.size());
         //clean up, clear stringbuilder
  	    scratch.setLength(0);
-    	gps = null;
     	if(tmpStructure != null) {
     		GeoItem[] widgetList = new GeoItem[tmpStructure.size()];
     		widgetList = tmpStructure.toArray(widgetList);
@@ -238,7 +231,13 @@ public class NetworkHelper {
         	tmpStructure.clear();
      	    return widgetList;
     	} 
-    	return new GeoItem[0];
+    	return new GeoItem[0];    	
+    }
+
+    
+    public static GeoItem[] geoDataFetch(Context ctx) {
+    	double[] gps = getGPS(ctx);
+    	return geoDataFetch(ctx, gps[0], gps[1]);
     	
     }
     

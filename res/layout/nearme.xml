@@ -11,16 +11,40 @@
             android:id="@+id/geo_list_detail"
             android:layout_height="wrap_content" 
 	    	android:layout_width="match_parent" />
-	    <Button
+	    <TextView android:id="@+id/btn1"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="50dp"
+			android:gravity="center"
+	    	style="@style/Text2"
+	    	android:text="@string/geo_button1"
+	    	android:layout_below="@id/geo_list_detail"
+		/> 
+	    <ImageButton
 	        android:id="@+id/redo"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_alignParentBottom="true"
-	        android:layout_centerHorizontal="true"
-	        android:layout_margin="25dp"
-	        android:onClick="geo_button"
-	        android:layout_below="@id/geo_list_detail"
-	        android:text="@string/geoListTitle" android:textStyle="bold"/>
+	        android:layout_below="@id/btn1"
+	        android:src="@drawable/get_loc_btn"	
+	        android:contentDescription="@string/geo_button1" 
+	        style="@style/GeoButton" />	    
+	    <TextView android:id="@+id/btn2"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="25dp"
+			android:gravity="center"
+	    	style="@style/Text2"
+	    	android:text="@string/geo_button2"
+	    	android:layout_below="@id/redo"
+		/> 
+	    <ImageButton
+	        android:id="@+id/geo_dialog_btn"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/btn2"
+	        android:src="@drawable/geo_btn"	
+	        android:contentDescription="@string/geo_button2"
+	        style="@style/GeoButton" />	 
 	</RelativeLayout>
 	
 	<com.google.android.maps.MapView

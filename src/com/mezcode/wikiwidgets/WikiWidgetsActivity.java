@@ -126,6 +126,7 @@ public class WikiWidgetsActivity extends Activity { //implements OnMenuItemClick
 	}
 
 	String returnDateForUrl(boolean photo) {
+		//unused?
 		final Time t = new Time(); t.setToNow();
 		final StringBuilder sb = new StringBuilder("http://en.m.wikipedia.org/wiki/");
 		if(photo) {
